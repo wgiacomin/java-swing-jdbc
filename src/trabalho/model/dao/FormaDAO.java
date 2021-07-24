@@ -18,11 +18,11 @@ import trabalho.model.dao.utils.ConnectionFactory;
 
 public class FormaDAO implements DAOInterface<Forma> {
 
-    private static final String QUERY_BUSCAR = "SELECT id, id_pizza, medida, tipo_forma FROM forma WHERE id = ?;";
-    private static final String QUERY_BUSCAR_TODOS = "SELECT id, id_pizza, medida, tipo_forma FROM forma;";
-    private static final String QUERY_INSERIR = "INSERT INTO forma(id_pizza, medida, tipo_forma) VALUES (?, ?, ?);";
+    private static final String QUERY_BUSCAR = "SELECT id, medida, tipo_forma FROM forma WHERE id = ?;";
+    private static final String QUERY_BUSCAR_TODOS = "SELECT id, medida, tipo_forma FROM forma;";
+    private static final String QUERY_INSERIR = "INSERT INTO forma(medida, tipo_forma) VALUES (?, ?, ?);";
     private static final String QUERY_REMOVER = "DELETE FROM forma WHERE id = ?;";
-    private static final String QUERY_EDITAR = "UPDATE forma SET id_pizza = ?, medida = ?, tipo_forma = ? WHERE id = ?;";
+    private static final String QUERY_EDITAR = "UPDATE forma SET medida = ?, tipo_forma = ? WHERE id = ?;";
 
     private Connection con = null;
 
@@ -52,10 +52,9 @@ public class FormaDAO implements DAOInterface<Forma> {
                 throw new DAOException("Erro buscando categoria de forma");
         }
         forma.setId(rs.getInt("id"));
-        forma.setIdPizza(rs.getInt("id_pizza"));
         return forma;
     }
-
+    
     @Override
     public Forma buscar(Forma forma) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(QUERY_BUSCAR)) {
@@ -69,6 +68,21 @@ public class FormaDAO implements DAOInterface<Forma> {
             }
         } catch (SQLException e) {
             throw new DAOException("Erro buscando categoria de forma: " + forma.getId(), e);
+        }
+    }
+
+    public Forma buscarPorId(int idForma) throws DAOException {
+        try (PreparedStatement st = con.prepareStatement(QUERY_BUSCAR)) {
+            st.setInt(1, idForma);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                Forma forma = extrairForma(rs);
+                return forma;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Erro buscando categoria de forma: " + idForma, e);
         }
     }
 
@@ -91,16 +105,15 @@ public class FormaDAO implements DAOInterface<Forma> {
     @Override
     public void inserir(Forma forma) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(QUERY_INSERIR)) {
-            st.setInt(1, forma.getIdPizza());
             if(forma instanceof Circulo){
-                st.setDouble(2,((Circulo) forma).getRaio());
-                st.setInt(3, TipoForma.CIRCULO);
+                st.setDouble(1,((Circulo) forma).getRaio());
+                st.setInt(2, TipoForma.CIRCULO);
             } else if(forma instanceof Quadrado){
-                st.setDouble(2,((Quadrado) forma).getLado());
-                st.setInt(3, TipoForma.QUADRADO);
+                st.setDouble(1,((Quadrado) forma).getLado());
+                st.setInt(2, TipoForma.QUADRADO);
             } else if(forma instanceof Triangulo){
-                st.setDouble(2,((Triangulo) forma).getLado());
-                st.setInt(3, TipoForma.TRIANGULO);
+                st.setDouble(1,((Triangulo) forma).getLado());
+                st.setInt(2, TipoForma.TRIANGULO);
             } else {
                 throw new DAOException("Erro no tipo de forma ao inserir forma: "
                         + QUERY_BUSCAR_TODOS);
@@ -126,21 +139,20 @@ public class FormaDAO implements DAOInterface<Forma> {
     @Override
     public void editar(Forma forma) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(QUERY_EDITAR)) {
-            st.setInt(1, forma.getIdPizza());
             if(forma instanceof Circulo){
-                st.setDouble(2,((Circulo) forma).getRaio());
-                st.setInt(3, TipoForma.CIRCULO);
+                st.setDouble(1,((Circulo) forma).getRaio());
+                st.setInt(2, TipoForma.CIRCULO);
             } else if(forma instanceof Quadrado){
-                st.setDouble(2,((Quadrado) forma).getLado());
-                st.setInt(3, TipoForma.QUADRADO);
+                st.setDouble(1,((Quadrado) forma).getLado());
+                st.setInt(2, TipoForma.QUADRADO);
             } else if(forma instanceof Triangulo){
-                st.setDouble(2,((Triangulo) forma).getLado());
-                st.setInt(3, TipoForma.TRIANGULO);
+                st.setDouble(1,((Triangulo) forma).getLado());
+                st.setInt(2, TipoForma.TRIANGULO);
             } else {
                 throw new DAOException("Erro no tipo de forma ao inserir forma: "
                         + QUERY_BUSCAR_TODOS);
             }
-            st.setInt(4, forma.getId());
+            st.setInt(3, forma.getId());
             st.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Erro ao editar forma: "
