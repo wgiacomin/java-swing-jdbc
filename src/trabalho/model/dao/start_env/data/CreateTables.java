@@ -36,11 +36,13 @@ public class CreateTables {
             query.executeUpdate("CREATE TABLE pizza (" +
                     "    id serial PRIMARY KEY," +
                     "    id_pedido integer," +
+                    "    id_pizza integer," +
                     "    CONSTRAINT pizza_id_pedido_fkey FOREIGN KEY (id_pedido)" +
-                    "        REFERENCES pedido (id) )");
+                    "        REFERENCES pedido (id) " +
+                    "    CONSTRAINT pizza_id_forma_fkey FOREIGN KEY (id_forma)" +
+                    "        REFERENCES forma (id))");
             query.executeUpdate("CREATE TABLE forma (" +
                     "    id serial PRIMARY KEY," +
-                    "    id_pizza integer," +
                     "    medida double precision," +
                     "    tipo_forma integer," +
                     "    CONSTRAINT forma_id_pizza_fkey FOREIGN KEY (id_pizza)" +
