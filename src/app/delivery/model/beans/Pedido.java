@@ -6,7 +6,7 @@ import app.exceptions.DAOException;
 
 public class Pedido {
     private int id;
-    private int idCliente;
+    private Cliente cliente;
 
     public Pedido() {
     }
@@ -19,19 +19,11 @@ public class Pedido {
         return id;
     }
 
-    public int getIdCliente() {
-        return idCliente;
-    }
-
-    public void setIdCliente(int idCliente) {
-        this.idCliente = idCliente;
-    }
-
-    public Cliente getCliente() throws DAOException {
-        ClienteDAO clienteDAO = new ClienteDAO();
-        Cliente cliente = new Cliente();
-        cliente.setId(idCliente);
-        clienteDAO.buscar(cliente);
+    public Cliente getCliente() {
         return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 }

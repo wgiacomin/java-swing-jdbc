@@ -1,7 +1,11 @@
 package app.delivery.model.dao;
 
+import app.delivery.model.beans.Formato;
 import app.delivery.model.beans.Pedido;
 import app.delivery.model.beans.Pizza;
+import app.delivery.model.beans.formatos.Circulo;
+import app.delivery.model.beans.formatos.Quadrado;
+import app.delivery.model.beans.formatos.Triangulo;
 import app.delivery.model.dao.utils.DAOInterface;
 import app.exceptions.DAOException;
 
@@ -12,15 +16,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import app.delivery.model.dao.utils.ConnectionFactory;
+import app.delivery.model.dao.utils.TipoForma;
 
 public class PizzaDAO implements DAOInterface<Pizza> {
 
-    private static final String QUERY_BUSCAR = "SELECT id, id_pedido FROM pizza WHERE id = ?;";
-    private static final String QUERY_BUSCAR_TODOS = "SELECT id, id_pedido FROM pizza;";
-    private static final String QUERY_BUSCAR_POR_PEDIDO = "SELECT id, id_pedido FROM pizza WHERE id_pedido = ?;";
-    private static final String QUERY_INSERIR = "INSERT INTO pizza(id_pedido) VALUES (?);";
+    private static final String QUERY_BUSCAR = "SELECT p.id, id_pedido, id_forma, medida, tipo_forma FROM pizza p INNER JOIN forma f ON p.id_forma = f.id WHERE p.id = ?;";
+    private static final String QUERY_BUSCAR_TODOS = "SELECT p.id, id_pedido, id_forma, medida, tipo_forma FROM pizza p INNER JOIN forma f ON p.id_forma = f.id;";
+    private static final String QUERY_BUSCAR_POR_PEDIDO = "SELECT p.id, id_pedido, id_forma, medida, tipo_forma FROM pizza p INNER JOIN forma f ON p.id_forma = f.id WHERE id_pedido = ?;";
+    private static final String QUERY_INSERIR = "INSERT INTO pizza(id_pedido, id_forma) VALUES (?);";
     private static final String QUERY_REMOVER = "DELETE FROM pizza WHERE id = ?;";
-    private static final String QUERY_EDITAR = "UPDATE pizza SET id_pedido = ? WHERE id = ?;";
+    private static final String QUERY_EDITAR = "UPDATE pizza SET id_pedido = ?, id_forma = ? WHERE id = ?;";
 
     private Connection con = null;
 
@@ -29,11 +34,34 @@ public class PizzaDAO implements DAOInterface<Pizza> {
         con = factory.getConnection();
     }
 
-    private Pizza extrairPizza(ResultSet rs) throws SQLException {
+    private Pizza extrairPizza(ResultSet rs) throws SQLException, DAOException {
         Pizza pizza = new Pizza();
 
         pizza.setId(rs.getInt("id"));
-        pizza.setIdPedido(rs.getInt("id_pedido"));
+        
+        Pedido pedido = new Pedido();
+        pedido.setId(rs.getInt("id_pedido"));
+        
+        Formato formato;
+        switch(rs.getInt("tipo_forma")){
+            case TipoForma.CIRCULO:
+                formato = new Circulo();
+                ((Circulo) formato).setRaio(rs.getDouble("medida"));
+                break;
+            case TipoForma.QUADRADO:
+                formato = new Quadrado();
+                ((Quadrado) formato).setLado(rs.getDouble("medida"));
+                break;
+            case TipoForma.TRIANGULO:
+                formato = new Triangulo();
+                ((Triangulo) formato).setLado(rs.getDouble("medida"));
+                break;
+            default:
+                throw new DAOException("Erro buscando categoria de forma");
+        }
+        formato.setId(rs.getInt("id_forma"));
+        
+        pizza.setFormato(formato);
         return pizza;
     }
 

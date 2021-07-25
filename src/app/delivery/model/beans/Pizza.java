@@ -9,9 +9,9 @@ import app.exceptions.DAOException;
 
 public class Pizza {
     private int id;
-    private int idPedido;
-    private int idForma;
-    private List<Integer> idSabores;
+    private Pedido pedido;
+    private Formato formato;
+    private List<Sabor> sabores;
 
     public int getId() {
         return id;
@@ -21,45 +21,28 @@ public class Pizza {
         this.id = id;
     }
 
-    public int getIdPedido() {
-        return idPedido;
-    }
-
-    public void setIdPedido(int idPedido) {
-        this.idPedido = idPedido;
-    }
-
-    public Pedido getPedido() throws DAOException {
-        PedidoDAO pedidoDAO = new PedidoDAO();
-        Pedido pedido = new Pedido();
-        pedido.setId(idPedido);
-        pedidoDAO.buscar(pedido);
+    public Pedido getPedido() {
         return pedido;
     }
 
-    public int getIdForma() {
-        return idForma;
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
     }
 
-    public void setIdForma(int idForma) {
-        this.idForma = idForma;
-    }
-    
-    public Formato getForma() throws DAOException{
-        FormaDAO formaDAO = new FormaDAO();
-        return formaDAO.buscarPorId(idForma);
+    public Formato getFormato() {
+        return formato;
     }
 
-    public List<Integer> getIdSabores() {
-        return idSabores;
+    public void setFormato(Formato formato) {
+        this.formato = formato;
     }
 
-    public void setIdSabores(List<Integer> idSabores) {
-        this.idSabores = idSabores;
+    public List<Sabor> getSabores() {
+        return sabores;
     }
-    
-    public List<Sabor> getSabores() throws DAOException {
-        SaborDAO saborDAO = new SaborDAO();
-        return saborDAO.buscarPorPizza(this);
+
+    public void setSabores(List<Sabor> sabores) {
+        this.sabores = sabores;
     }
+
 }

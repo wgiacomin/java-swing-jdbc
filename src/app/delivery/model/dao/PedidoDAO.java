@@ -33,7 +33,9 @@ public class PedidoDAO implements DAOInterface<Pedido> {
         Pedido pedido = new Pedido();
 
         pedido.setId(rs.getInt("id"));
-        pedido.setIdCliente(rs.getInt("id_cliente"));
+        Cliente cliente = new Cliente();
+        cliente.setId(rs.getInt("id_cliente"));
+        pedido.setCliente(cliente);
         return pedido;
     }
 
@@ -86,7 +88,7 @@ public class PedidoDAO implements DAOInterface<Pedido> {
     @Override
     public void inserir(Pedido pedido) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(QUERY_INSERIR)) {
-            st.setInt(1, pedido.getIdCliente());
+            st.setInt(1, pedido.getCliente().getId());
             st.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Erro ao criar pedido: "
@@ -108,7 +110,7 @@ public class PedidoDAO implements DAOInterface<Pedido> {
     @Override
     public void editar(Pedido pedido) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(QUERY_EDITAR)) {
-            st.setInt(1, pedido.getIdCliente());
+            st.setInt(1, pedido.getCliente().getId());
             st.setInt(2, pedido.getId());
             st.executeUpdate();
         } catch (SQLException e) {
