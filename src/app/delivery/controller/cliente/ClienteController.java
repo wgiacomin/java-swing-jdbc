@@ -8,12 +8,15 @@ import java.util.List;
 
 public class ClienteController {
 
-    public static List<Cliente> buscarTodos() throws DAOException {
+    public static List<Cliente> buscarTodos() {
         try (ConnectionFactory factory = new ConnectionFactory()) {
             ClienteDAO bd = new ClienteDAO(factory.getConnection());
             List<Cliente> clientes = bd.buscarTodos();
             return clientes;
-        } 
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }
