@@ -1,13 +1,14 @@
 package app.delivery.controller.cliente;
 
+import app.delivery.model.beans.Cliente;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 public class ClienteTabela extends AbstractTableModel {
-
     private final String[] colunas = new String[]{"#", "Nome", "Sobrenome", "RG", "CPF", "Endereço"};
- 
+    private List<Cliente> listaCliente = ClienteController.buscarTodos();
+    
     @Override
     public int getRowCount() {
         return listaDeClientes.size();

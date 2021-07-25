@@ -10,7 +10,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import app.delivery.model.dao.utils.ConnectionFactory;
 
 public class ClienteDAO implements DAOInterface<Cliente> {
 
@@ -22,9 +21,11 @@ public class ClienteDAO implements DAOInterface<Cliente> {
 
     private Connection con = null;
 
-    public ClienteDAO() throws DAOException {
-        ConnectionFactory factory = new ConnectionFactory();
-        con = factory.getConnection();
+    public ClienteDAO(Connection con) throws DAOException {
+        if (con == null) {
+            throw new DAOException("Conexão nula ao criar.");
+        }
+        this.con = con;
     }
 
     private Cliente extrairCliente(ResultSet rs) throws SQLException {
