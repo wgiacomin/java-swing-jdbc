@@ -33,8 +33,8 @@ public class ClienteDAO implements DAOInterface<Cliente> {
 
         cliente.setId(rs.getInt("id"));
         cliente.setNome(rs.getString("nome"));
-        cliente.setSobrenome(rs.getString("descricao"));
-        cliente.setTelefone(rs.getString("peso"));
+        cliente.setSobrenome(rs.getString("sobrenome"));
+        cliente.setTelefone(rs.getString("telefone"));
         return cliente;
     }
 
