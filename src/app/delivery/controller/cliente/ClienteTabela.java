@@ -1,17 +1,20 @@
 package app.delivery.controller.cliente;
 
 import app.delivery.model.beans.Cliente;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 public class ClienteTabela extends AbstractTableModel {
-    private final String[] colunas = new String[]{"#", "Nome", "Sobrenome", "RG", "CPF", "Endereço"};
-    private List<Cliente> listaCliente = ClienteController.buscarTodos();
+    private final String[] colunas = new String[]{"id", "Nome", "Sobrenome", "Telefone"};
+    private List<Cliente> listaCliente;
+
+    public ClienteTabela() {
+        this.listaCliente = ClienteController.buscarTodos();
+    }
     
     @Override
     public int getRowCount() {
-        return listaDeClientes.size();
+        return listaCliente.size();
     }
 
     @Override
@@ -31,46 +34,34 @@ public class ClienteTabela extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int row, int col) {
-        Cliente cliente = listaDeClientes.get(row);
+        Cliente cliente = listaCliente.get(row);
         switch (col) {
             case 0:
-                return row;
+                return cliente.getId();
             case 1:
                 return cliente.getNome();
             case 2:
                 return cliente.getSobrenome();
             case 3:
-                return cliente.getRg();
-            case 4:
-                return cliente.getCpf();
-            case 5:
-                return cliente.getEndereco();
+                return cliente.getTelefone();
             default:
                 return null;
         }
     }
 
     public Cliente getCliente(int linha) {
-        return listaDeClientes.get(linha);
+        return listaCliente.get(linha);
     }
 
     public void addCliente(Cliente cliente) {
-        this.listaDeClientes.add(cliente);
-        this.fireTableRowsInserted(listaDeClientes.size() - 1, listaDeClientes.size() - 1);
+        
     }
 
     public boolean removeCliente(int linha) {
-        if (this.listaDeClientes.get(linha).getVeiculosLocados() > 0) {
-            return false;
-        }
-        boolean result = this.listaDeClientes.remove(this.listaDeClientes.get(linha));
-        this.fireTableRowsDeleted(linha, linha);
-        return result;
+        return true;
     }
 
     public void refreshTabela(List<Cliente> lista) {
-        this.listaDeClientes = new ArrayList();
-        this.listaDeClientes.addAll(lista);
         this.fireTableDataChanged();
     }
 }

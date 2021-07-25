@@ -1,5 +1,8 @@
 package app.delivery.views.main;
 
+import app.delivery.views.cliente.ManterCliente;
+import java.awt.Dimension;
+
 
 public class main extends javax.swing.JFrame {
 
@@ -61,7 +64,13 @@ public class main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuCadastrarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuCadastrarMouseReleased
-        // TODO add your handling code here:
+        ManterCliente clientesManter = new ManterCliente();
+        this.mainScreen.add(clientesManter);
+        Dimension desktopSize = this.getSize();
+        Dimension jInternalFrameSize = clientesManter.getSize();
+        clientesManter.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                (desktopSize.height - jInternalFrameSize.height - 100) / 2);
+        clientesManter.setVisible(true);
     }//GEN-LAST:event_menuCadastrarMouseReleased
 
 

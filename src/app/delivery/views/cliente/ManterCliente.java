@@ -5,17 +5,15 @@
  */
 package app.delivery.views.cliente;
 
-/**
- *
- * @author wande
- */
-public class ManterCliente extends javax.swing.JInternalFrame {
+import app.delivery.controller.cliente.ClienteTabela;
 
-    /**
-     * Creates new form ManterCliente
-     */
+
+public class ManterCliente extends javax.swing.JInternalFrame {
+    private ClienteTabela clientesTabela = new ClienteTabela();
+    
     public ManterCliente() {
         initComponents();
+        
     }
 
     /**
@@ -55,17 +53,9 @@ public class ManterCliente extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setTitle("Manter Cliente");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        jTable1.setModel(clientesTabela);
+        jTable1.setRowSelectionAllowed(true);
+        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(jTable1);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Adicionar/Editar"));
@@ -207,6 +197,9 @@ public class ManterCliente extends javax.swing.JInternalFrame {
 
         jLabel7.setText("A linha selecionada é a ");
 
+        linhaAtual.setFocusPainted(false);
+        linhaAtual.setFocusable(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -231,11 +224,11 @@ public class ManterCliente extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1)
             .addGroup(layout.createSequentialGroup()
-                .addGap(35, 35, 35)
+                .addGap(22, 22, 22)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel7)
                     .addComponent(linhaAtual, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
