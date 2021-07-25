@@ -1,6 +1,6 @@
-package app.delivery.model.dao.start_env.data;
+package trabalho.model.dao.start_env.data;
 
-import app.delivery.model.dao.utils.ConnectionFactory;
+import trabalho.model.dao.utils.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.Statement;
 
@@ -33,20 +33,18 @@ public class CreateTables {
                     "    id_cliente integer," +
                     "    CONSTRAINT pedido_id_cliente_fkey FOREIGN KEY (id_cliente)\n" +
                     "        REFERENCES cliente (id) )");
-            query.executeUpdate("CREATE TABLE pizza (" +
-                    "    id serial PRIMARY KEY," +
-                    "    id_pedido integer," +
-                    "    id_pizza integer," +
-                    "    CONSTRAINT pizza_id_pedido_fkey FOREIGN KEY (id_pedido)" +
-                    "        REFERENCES pedido (id) " +
-                    "    CONSTRAINT pizza_id_forma_fkey FOREIGN KEY (id_forma)" +
-                    "        REFERENCES forma (id))");
             query.executeUpdate("CREATE TABLE forma (" +
                     "    id serial PRIMARY KEY," +
                     "    medida double precision," +
-                    "    tipo_forma integer," +
-                    "    CONSTRAINT forma_id_pizza_fkey FOREIGN KEY (id_pizza)" +
-                    "        REFERENCES pizza (id))");
+                    "    tipo_forma integer)");
+            query.executeUpdate("CREATE TABLE pizza (" +
+                    "    id serial PRIMARY KEY," +
+                    "    id_pedido integer," +
+                    "    id_forma integer," +
+                    "    CONSTRAINT pizza_id_pedido_fkey FOREIGN KEY (id_pedido)" +
+                    "        REFERENCES pedido (id), " +
+                    "    CONSTRAINT pizza_id_forma_fkey FOREIGN KEY (id_forma)" +
+                    "        REFERENCES forma (id))");
             query.executeUpdate("CREATE TABLE sabor (" +
                     "    id serial PRIMARY KEY," +
                     "    nome text)");
