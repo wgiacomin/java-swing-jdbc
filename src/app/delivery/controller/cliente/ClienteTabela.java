@@ -64,4 +64,9 @@ public class ClienteTabela extends AbstractTableModel {
     public void refreshTabela(List<Cliente> lista) {
         this.fireTableDataChanged();
     }
+    
+    public void filterTable(String nome, String sobrenome, String telefone){
+       this.listaCliente = ClienteController.filtrarDado(nome, sobrenome, telefone);
+       this.fireTableDataChanged();
+    }
 }

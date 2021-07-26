@@ -54,11 +54,22 @@ public class ManterCliente extends javax.swing.JInternalFrame {
         setTitle("Manter Cliente");
 
         TabelaClientes.setModel(clientesTabela);
-        TabelaClientes.setRowSelectionAllowed(true);
         TabelaClientes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(TabelaClientes);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Adicionar/Editar"));
+
+        boxNome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                boxNomeKeyReleased(evt);
+            }
+        });
+
+        boxSobrenome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                boxSobrenomeKeyReleased(evt);
+            }
+        });
 
         try {
             boxTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) # ####-####")));
@@ -134,6 +145,12 @@ public class ManterCliente extends javax.swing.JInternalFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Filtrar"));
 
+        checkNome.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                checkNomeItemStateChanged(evt);
+            }
+        });
+
         jLabel4.setLabelFor(filtrarNome);
         jLabel4.setText("Nome:");
 
@@ -190,7 +207,7 @@ public class ManterCliente extends javax.swing.JInternalFrame {
                     .addComponent(checkTelefone)
                     .addComponent(filtrarTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         jLabel7.setText("A linha selecionada é a ");
@@ -226,7 +243,7 @@ public class ManterCliente extends javax.swing.JInternalFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel7)
                     .addComponent(linhaAtual, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -235,6 +252,18 @@ public class ManterCliente extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void boxNomeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_boxNomeKeyReleased
+        boxNome.setText(boxNome.getText().replaceAll("[^a-zA-Z]", ""));
+    }//GEN-LAST:event_boxNomeKeyReleased
+
+    private void boxSobrenomeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_boxSobrenomeKeyReleased
+        boxSobrenome.setText(boxSobrenome.getText().replaceAll("[^a-zA-Z ]", ""));
+    }//GEN-LAST:event_boxSobrenomeKeyReleased
+
+    private void checkNomeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkNomeItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_checkNomeItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
