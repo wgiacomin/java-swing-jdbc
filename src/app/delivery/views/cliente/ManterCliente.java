@@ -7,6 +7,8 @@ package app.delivery.views.cliente;
 
 import app.delivery.controller.cliente.ClienteTabela;
 import app.delivery.model.beans.Cliente;
+import app.delivery.views.Dialog;
+import javax.swing.JOptionPane;
 
 public class ManterCliente extends javax.swing.JInternalFrame {
 
@@ -40,6 +42,7 @@ public class ManterCliente extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        botaoRecarregar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         filtrarNome = new javax.swing.JTextField();
         filtrarSobrenome = new javax.swing.JTextField();
@@ -87,8 +90,18 @@ public class ManterCliente extends javax.swing.JInternalFrame {
         }
 
         botaoAdicionar.setText("Adicionar");
+        botaoAdicionar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                botaoAdicionarMouseReleased(evt);
+            }
+        });
 
         botaoEditar.setText("Editar");
+        botaoEditar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                botaoEditarMouseReleased(evt);
+            }
+        });
 
         botaoRemover.setText("Remover");
         botaoRemover.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -105,6 +118,13 @@ public class ManterCliente extends javax.swing.JInternalFrame {
 
         jLabel3.setLabelFor(boxTelefone);
         jLabel3.setText("Telefone:");
+
+        botaoRecarregar.setText("Recarregar");
+        botaoRecarregar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                botaoRecarregarMouseReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -124,14 +144,14 @@ public class ManterCliente extends javax.swing.JInternalFrame {
                             .addComponent(boxSobrenome)
                             .addComponent(boxTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(botaoAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(botaoRecarregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(botaoAdicionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(30, 30, 30)
-                        .addComponent(botaoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(botaoEditar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botaoRemover, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(0, 32, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(botaoRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(98, 98, 98))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,9 +172,11 @@ public class ManterCliente extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoAdicionar)
                     .addComponent(botaoEditar))
-                .addGap(28, 28, 28)
-                .addComponent(botaoRemover)
-                .addGap(23, 23, 23))
+                .addGap(26, 26, 26)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botaoRemover)
+                    .addComponent(botaoRecarregar))
+                .addGap(25, 25, 25))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Filtrar"));
@@ -370,14 +392,79 @@ public class ManterCliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_TabelaClientesMousePressed
 
     private void botaoRemoverMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoRemoverMouseReleased
-        clientesTabela.removeCliente(linhaAtual_);
+        if (linhaAtual_ > -1) {
+            Object[] opcoes = {"Sim", "Não"};
+            Object defaultChoice = opcoes[1];
+            int input = JOptionPane.showOptionDialog(null,
+                    "Tem certeza que deseja remover o cliente selecionado?",
+                    "Atenção!",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    opcoes,
+                    defaultChoice);
+            if (input == 0) {
+                if (clientesTabela.removeCliente(linhaAtual_)) {
+                    linhaAtual_ = -1;
+                    linhaAtual.setText("");
+                    TabelaClientes.clearSelection();
+                    Dialog.main("Cliente removido com sucesso!");
+                } else {
+                    Dialog.main("Erro ao remover cliente!");
+                }
+            }
+        }
     }//GEN-LAST:event_botaoRemoverMouseReleased
+
+    private void botaoEditarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoEditarMouseReleased
+        if (linhaAtual_ != -1) {
+            Cliente cliente = new Cliente();
+            if (boxNome.getText().isEmpty() || boxSobrenome.getText().isEmpty() || boxTelefone.getText().isEmpty()) {
+                Dialog.main("Um ou mais campos não foram preenchidos.");
+            } else {
+                cliente.setNome(boxNome.getText());
+                cliente.setSobrenome(boxSobrenome.getText());
+                cliente.setTelefone(boxTelefone.getText().replaceAll("\\D+", ""));
+                clientesTabela.editCliente(cliente, linhaAtual_);
+                linhaAtual_ = -1;
+                linhaAtual.setText("");
+                TabelaClientes.clearSelection();
+            }
+        } else {
+            Dialog.main("A linha não foi selecionada!");
+        }
+    }//GEN-LAST:event_botaoEditarMouseReleased
+
+    private void botaoAdicionarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoAdicionarMouseReleased
+        if (boxNome.getText().isEmpty() || boxSobrenome.getText().isEmpty() || boxTelefone.getText().isEmpty()) {
+            Dialog.main("Um ou mais campos não foram preenchidos.");
+            TabelaClientes.clearSelection();
+        } else {
+            TabelaClientes.clearSelection();
+            Cliente cliente = new Cliente();
+            cliente.setNome(boxNome.getText());
+            cliente.setSobrenome(boxSobrenome.getText());
+            cliente.setTelefone(boxTelefone.getText().replaceAll("\\D+", ""));
+            clientesTabela.addCliente(cliente);
+            boxNome.setText("");
+            boxSobrenome.setText("");
+            boxTelefone.setText("");
+            Dialog.main("Adicionado com sucesso!");
+        }
+
+    }//GEN-LAST:event_botaoAdicionarMouseReleased
+
+    private void botaoRecarregarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoRecarregarMouseReleased
+        clientesTabela.refreshTabela();
+        Dialog.main("Atualizado com o banco!");
+    }//GEN-LAST:event_botaoRecarregarMouseReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TabelaClientes;
     private javax.swing.JButton botaoAdicionar;
     private javax.swing.JButton botaoEditar;
+    private javax.swing.JButton botaoRecarregar;
     private javax.swing.JButton botaoRemover;
     private javax.swing.JTextField boxNome;
     private javax.swing.JTextField boxSobrenome;

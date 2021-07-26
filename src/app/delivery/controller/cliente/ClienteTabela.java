@@ -54,14 +54,29 @@ public class ClienteTabela extends AbstractTableModel {
     }
 
     public void addCliente(Cliente cliente) {
-        
+        ClienteController.adicionar(cliente);
+        listaCliente.add(cliente);
+        this.fireTableRowsInserted(this.listaCliente.size() -1, this.listaCliente.size() -1);
+    }
+    
+    public void editCliente(Cliente cliente, int linha){
+        cliente.setId((int) this.getValueAt(linha, 0));
+        ClienteController.editar(cliente);
+        listaCliente.set(linha, cliente);
+        this.fireTableRowsUpdated(linha, linha);
     }
 
     public boolean removeCliente(int linha) {
-        return true;
+       if(ClienteController.remover(this.getCliente(linha))){
+           listaCliente.remove(linha);
+           this.fireTableRowsDeleted(linha, linha);
+           return true;
+       }
+       return false;
     }
 
-    public void refreshTabela(List<Cliente> lista) {
+    public void refreshTabela() {
+        this.listaCliente = ClienteController.buscarTodos();
         this.fireTableDataChanged();
     }
     

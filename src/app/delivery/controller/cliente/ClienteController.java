@@ -20,13 +20,31 @@ public class ClienteController {
         return null;
     }
 
-    public static boolean remover(int id) {
+    public static boolean remover(Cliente cliente) {
         try (ConnectionFactory factory = new ConnectionFactory()) {
             ClienteDAO bd = new ClienteDAO(factory.getConnection());
-            bd.remover(id);
+            bd.remover(cliente);
             return true;
         } catch (DAOException e) {
             return false;
+        }
+    }
+
+    public static void editar(Cliente cliente) {
+        try (ConnectionFactory factory = new ConnectionFactory()) {
+            ClienteDAO bd = new ClienteDAO(factory.getConnection());
+            bd.editar(cliente);
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void adicionar(Cliente cliente) {
+        try (ConnectionFactory factory = new ConnectionFactory()) {
+            ClienteDAO bd = new ClienteDAO(factory.getConnection());
+            bd.inserir(cliente);
+        } catch (DAOException e) {
+            e.printStackTrace();
         }
     }
 
