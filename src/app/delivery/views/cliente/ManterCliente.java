@@ -91,6 +91,11 @@ public class ManterCliente extends javax.swing.JInternalFrame {
         botaoEditar.setText("Editar");
 
         botaoRemover.setText("Remover");
+        botaoRemover.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                botaoRemoverMouseReleased(evt);
+            }
+        });
 
         jLabel1.setLabelFor(boxNome);
         jLabel1.setText("Nome:");
@@ -363,6 +368,10 @@ public class ManterCliente extends javax.swing.JInternalFrame {
             boxTelefone.setText(cliente.getTelefone());
         }
     }//GEN-LAST:event_TabelaClientesMousePressed
+
+    private void botaoRemoverMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoRemoverMouseReleased
+        clientesTabela.removeCliente(linhaAtual_);
+    }//GEN-LAST:event_botaoRemoverMouseReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

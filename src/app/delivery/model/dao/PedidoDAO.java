@@ -97,9 +97,9 @@ public class PedidoDAO implements DAOInterface<Pedido> {
     }
 
     @Override
-    public void remover(Pedido pedido) throws DAOException {
+    public void remover(int id) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(QUERY_REMOVER)) {
-            st.setInt(1, pedido.getId());
+            st.setInt(1, id);
             st.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Erro ao deletar pedido: "

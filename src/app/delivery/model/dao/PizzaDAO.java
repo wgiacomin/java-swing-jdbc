@@ -123,9 +123,9 @@ public class PizzaDAO implements DAOInterface<Pizza> {
     }
 
     @Override
-    public void remover(Pizza pizza) throws DAOException {
+    public void remover(int id) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(QUERY_REMOVER)) {
-            st.setInt(1, pizza.getId());
+            st.setInt(1, id);
             st.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Erro ao deletar pizza: "
