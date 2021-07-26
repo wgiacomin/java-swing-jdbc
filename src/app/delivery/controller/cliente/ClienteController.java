@@ -20,6 +20,16 @@ public class ClienteController {
         return null;
     }
 
+    public static boolean remover(int id) {
+        try (ConnectionFactory factory = new ConnectionFactory()) {
+            ClienteDAO bd = new ClienteDAO(factory.getConnection());
+            bd.remover(id);
+            return true;
+        } catch (DAOException e) {
+            return false;
+        }
+    }
+
     public static List<Cliente> filtrarDado(String[] filters) {
         try (ConnectionFactory factory = new ConnectionFactory()) {
             ClienteDAO bd = new ClienteDAO(factory.getConnection());

@@ -99,9 +99,9 @@ public class SaborDAO implements DAOInterface<Sabor> {
     }
 
     @Override
-    public void remover(int id) throws DAOException {
+    public void remover(Sabor sabor) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(QUERY_REMOVER)) {
-            st.setInt(1, id);
+            st.setInt(1, sabor.getId());
             st.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Erro ao deletar sabor: "

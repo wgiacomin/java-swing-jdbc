@@ -126,9 +126,9 @@ public class FormaDAO implements DAOInterface<Formato> {
     }
 
     @Override
-    public void remover(int id) throws DAOException {
+    public void remover(Formato forma) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(QUERY_REMOVER)) {
-            st.setInt(1, id);
+            st.setInt(1, forma.getId());
             st.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Erro ao deletar forma: "

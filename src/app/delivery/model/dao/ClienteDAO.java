@@ -84,9 +84,9 @@ public class ClienteDAO implements DAOInterface<Cliente> {
     }
 
     @Override
-    public void remover(int id) throws DAOException {
+    public void remover(Cliente cliente) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(QUERY_REMOVER)) {
-            st.setInt(1, id);
+            st.setInt(1, cliente.getId());
             st.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Erro ao deletar cliente: "
