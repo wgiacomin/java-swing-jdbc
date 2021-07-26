@@ -14,15 +14,15 @@ public class CreateCliente {
             con = factory.getConnection();
             query = con.createStatement();
 
-            query.executeUpdate("INSERT INTO cliente (nome,sobrenome,telefone) VALUES ('Gabriel','Schmidt', '111111111');");
+            query.executeUpdate("INSERT INTO cliente (nome,sobrenome,telefone) VALUES ('Gabriel','Schmidt', '11111111111');");
 
-            query.executeUpdate("INSERT INTO cliente (nome,sobrenome,telefone) VALUES ('Wanderson','Giacomin', '222222222');");
+            query.executeUpdate("INSERT INTO cliente (nome,sobrenome,telefone) VALUES ('Wanderson','Giacomin', '22222222222');");
             
-            query.executeUpdate("INSERT INTO cliente (nome,sobrenome,telefone) VALUES ('Cliente 3','Teste', '333333333');");
+            query.executeUpdate("INSERT INTO cliente (nome,sobrenome,telefone) VALUES ('Cliente 3','Teste', '33333333333');");
             
-            query.executeUpdate("INSERT INTO cliente (nome,sobrenome,telefone) VALUES ('Cliente 4','Teste', '444444444');");
+            query.executeUpdate("INSERT INTO cliente (nome,sobrenome,telefone) VALUES ('Cliente 4','Teste', '44444444444');");
             
-            query.executeUpdate("INSERT INTO cliente (nome,sobrenome,telefone) VALUES ('Cliente 5','Teste', '555555555');");
+            query.executeUpdate("INSERT INTO cliente (nome,sobrenome,telefone) VALUES ('Cliente 5','Teste', '55555555555');");
 
             System.out.println("Clientes criados com sucesso.");
         } catch (Exception e) {

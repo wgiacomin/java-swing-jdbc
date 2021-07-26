@@ -6,12 +6,16 @@
 package app.delivery.views.cliente;
 
 import app.delivery.controller.cliente.ClienteTabela;
-
+import app.delivery.model.beans.Cliente;
 
 public class ManterCliente extends javax.swing.JInternalFrame {
+
+    private int linhaAtual_ = -1;
     private ClienteTabela clientesTabela = new ClienteTabela();
-    
+    private String[] filters;
+
     public ManterCliente() {
+        this.filters = new String[]{"", "", ""};
         initComponents();
         TabelaClientes.getColumnModel().getColumn(0).setPreferredWidth(15);
     }
@@ -55,6 +59,11 @@ public class ManterCliente extends javax.swing.JInternalFrame {
 
         TabelaClientes.setModel(clientesTabela);
         TabelaClientes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        TabelaClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                TabelaClientesMousePressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(TabelaClientes);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Adicionar/Editar"));
@@ -145,6 +154,30 @@ public class ManterCliente extends javax.swing.JInternalFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Filtrar"));
 
+        filtrarNome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                filtrarNomeKeyReleased(evt);
+            }
+        });
+
+        filtrarSobrenome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                filtrarSobrenomeKeyReleased(evt);
+            }
+        });
+
+        checkSobrenome.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                checkSobrenomeItemStateChanged(evt);
+            }
+        });
+
+        checkTelefone.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                checkTelefoneItemStateChanged(evt);
+            }
+        });
+
         checkNome.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 checkNomeItemStateChanged(evt);
@@ -165,6 +198,11 @@ public class ManterCliente extends javax.swing.JInternalFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        filtrarTelefone.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                filtrarTelefoneKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -262,8 +300,69 @@ public class ManterCliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_boxSobrenomeKeyReleased
 
     private void checkNomeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkNomeItemStateChanged
-        // TODO add your handling code here:
+        if (checkNome.isSelected()) {
+            filters[0] = filtrarNome.getText();
+        } else {
+            filters[0] = "";
+        }
+        this.clientesTabela.filterTable(filters);
     }//GEN-LAST:event_checkNomeItemStateChanged
+
+    private void checkSobrenomeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkSobrenomeItemStateChanged
+        if (checkNome.isSelected()) {
+            filters[1] = filtrarSobrenome.getText();
+        } else {
+            filters[1] = "";
+        }
+        this.clientesTabela.filterTable(filters);
+    }//GEN-LAST:event_checkSobrenomeItemStateChanged
+
+    private void checkTelefoneItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkTelefoneItemStateChanged
+        if (checkNome.isSelected()) {
+            filters[2] = filtrarTelefone.getText();
+        } else {
+            filters[2] = "";
+        }
+        this.clientesTabela.filterTable(filters);
+    }//GEN-LAST:event_checkTelefoneItemStateChanged
+
+    private void filtrarNomeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_filtrarNomeKeyReleased
+        if (!checkNome.isSelected()) {
+            checkNome.setSelected(true);
+        } else {
+            filters[0] = filtrarNome.getText();
+            this.clientesTabela.filterTable(filters);
+        }
+    }//GEN-LAST:event_filtrarNomeKeyReleased
+
+    private void filtrarSobrenomeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_filtrarSobrenomeKeyReleased
+        if (!checkSobrenome.isSelected()) {
+            checkSobrenome.setSelected(true);
+        } else {
+            filters[1] = filtrarSobrenome.getText();
+            this.clientesTabela.filterTable(filters);
+        }
+    }//GEN-LAST:event_filtrarSobrenomeKeyReleased
+
+    private void filtrarTelefoneKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_filtrarTelefoneKeyReleased
+        if (!checkTelefone.isSelected()) {
+            checkTelefone.setSelected(true);
+        } else {
+            filters[2] = filtrarTelefone.getText();
+            this.clientesTabela.filterTable(filters);
+        }
+    }//GEN-LAST:event_filtrarTelefoneKeyReleased
+
+    private void TabelaClientesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaClientesMousePressed
+        linhaAtual_ = TabelaClientes.rowAtPoint(evt.getPoint());
+        if (linhaAtual_ != -1) {
+            Cliente cliente = clientesTabela.getCliente(linhaAtual_);
+            linhaAtual.setText(String.valueOf(cliente.getId()));
+            boxNome.setText(cliente.getNome());
+            boxSobrenome.setText(cliente.getSobrenome());
+            boxTelefone.setText(cliente.getTelefone());
+        }
+    }//GEN-LAST:event_TabelaClientesMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

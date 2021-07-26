@@ -20,37 +20,37 @@ public class ClienteController {
         return null;
     }
 
-    public static List<Cliente> filtrarDado(String nome, String sobrenome, String telefone) {
+    public static List<Cliente> filtrarDado(String[] filters) {
         try (ConnectionFactory factory = new ConnectionFactory()) {
             ClienteDAO bd = new ClienteDAO(factory.getConnection());
             List<Cliente> clientes = bd.buscarTodos();
 
             Iterator<Cliente> i;
-            if (!nome.isEmpty()) {
+            if (!filters[0].equals("")) {
                 i = clientes.iterator();
                 while (i.hasNext()) {
                     Cliente cliente = i.next();
-                    if (!cliente.getNome().matches(nome)) {
+                    if (!cliente.getNome().matches("(?i)^.*" + filters[0] + ".*$")) {
                         i.remove();
                     }
                 }
             }
 
-            if (!sobrenome.isEmpty()) {
+            if (!filters[1].equals("")) {
                 i = clientes.iterator();
                 while (i.hasNext()) {
                     Cliente cliente = i.next();
-                    if (!cliente.getSobrenome().matches(sobrenome)) {
+                    if (!cliente.getSobrenome().matches("(?i)^.*" + filters[1] + ".*$")) {
                         i.remove();
                     }
                 }
             }
 
-            if (!telefone.isEmpty()) {
+            if (!filters[2].equals("")) {
                 i = clientes.iterator();
                 while (i.hasNext()) {
                     Cliente cliente = i.next();
-                    if (!cliente.getTelefone().equals(telefone)) {
+                    if (!cliente.getTelefone().replaceAll("\\D+", "").matches("^.*" + filters[2].replaceAll("\\D+", "") + ".*$")) {
                         i.remove();
                     }
                 }

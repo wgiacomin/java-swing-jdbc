@@ -81,6 +81,9 @@
               <JTableSelectionModel selectionMode="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="TabelaClientesMousePressed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -281,12 +284,24 @@
       </Layout>
       <SubComponents>
         <Component class="javax.swing.JTextField" name="filtrarNome">
+          <Events>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="filtrarNomeKeyReleased"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="filtrarSobrenome">
+          <Events>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="filtrarSobrenomeKeyReleased"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JCheckBox" name="checkSobrenome">
+          <Events>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="checkSobrenomeItemStateChanged"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JCheckBox" name="checkTelefone">
+          <Events>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="checkTelefoneItemStateChanged"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JCheckBox" name="checkNome">
           <Events>
@@ -323,6 +338,9 @@
               <Format format="(##) # ####-####" subtype="-1" type="5"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="filtrarTelefoneKeyReleased"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
