@@ -48,13 +48,13 @@ public class CreateTables {
             query.executeUpdate("CREATE TABLE tipo_sabor (" +
                     "    id serial PRIMARY KEY," +
                     "    nome text," +
-                    "    custo double)");
+                    "    custo double precision)");
             query.executeUpdate("CREATE TABLE sabor (" +
                     "    id serial PRIMARY KEY," +
                     "    nome text," +
                     "    id_tipo integer," +
                     "    CONSTRAINT sabor_id_tipo_fkey FOREIGN KEY (id_tipo)" +
-                    "        REFERENCES tipo_sabor (id) ");
+                    "        REFERENCES tipo_sabor (id) )");
             query.executeUpdate("CREATE TABLE pizza_sabor (" +
                     "    id serial PRIMARY KEY," +
                     "    id_pizza integer," +

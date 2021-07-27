@@ -14,25 +14,25 @@ public class CreateSabor {
             con = factory.getConnection();
             query = con.createStatement();
 
-            query.executeUpdate("INSERT INTO sabor (nome) VALUES ('Calabresa');");
+            query.executeUpdate("INSERT INTO sabor (nome, id_tipo) VALUES ('Calabresa', 1);");
 
-            query.executeUpdate("INSERT INTO sabor (nome) VALUES ('Portuguesa');");
+            query.executeUpdate("INSERT INTO sabor (nome, id_tipo) VALUES ('Portuguesa', 1);");
             
-            query.executeUpdate("INSERT INTO sabor (nome) VALUES ('Atum');");
+            query.executeUpdate("INSERT INTO sabor (nome, id_tipo) VALUES ('Atum', 2);");
             
-            query.executeUpdate("INSERT INTO sabor (nome) VALUES ('Baiana');");
+            query.executeUpdate("INSERT INTO sabor (nome, id_tipo) VALUES ('Baiana', 2);");
             
-            query.executeUpdate("INSERT INTO sabor (nome) VALUES ('Brócolis');");
+            query.executeUpdate("INSERT INTO sabor (nome, id_tipo) VALUES ('Brócolis', 2);");
             
-            query.executeUpdate("INSERT INTO sabor (nome) VALUES ('Caipira');");
+            query.executeUpdate("INSERT INTO sabor (nome, id_tipo) VALUES ('Caipira', 3);");
             
-            query.executeUpdate("INSERT INTO sabor (nome) VALUES ('Frango Catupiry');");
+            query.executeUpdate("INSERT INTO sabor (nome, id_tipo) VALUES ('Frango Catupiry', 1);");
             
-            query.executeUpdate("INSERT INTO sabor (nome) VALUES ('Camarão');");
+            query.executeUpdate("INSERT INTO sabor (nome, id_tipo) VALUES ('Camarão', 3);");
             
-            query.executeUpdate("INSERT INTO sabor (nome) VALUES ('Lombo com Abacaxi');");
+            query.executeUpdate("INSERT INTO sabor (nome, id_tipo) VALUES ('Lombo com Abacaxi', 3);");
             
-            query.executeUpdate("INSERT INTO sabor (nome) VALUES ('Pão');");
+            query.executeUpdate("INSERT INTO sabor (nome, id_tipo) VALUES ('Pão', 3);");
 
             System.out.println("Sabores criados com sucesso.");
         } catch (Exception e) {
