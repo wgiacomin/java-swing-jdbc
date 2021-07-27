@@ -13,8 +13,8 @@ import javax.swing.JOptionPane;
 public class ManterCliente extends javax.swing.JInternalFrame {
 
     private int linhaAtual_ = -1;
-    private ClienteTabela clientesTabela = new ClienteTabela();
-    private String[] filters;
+    private final ClienteTabela clientesTabela = new ClienteTabela();
+    private final String[] filters;
 
     public ManterCliente() {
         this.filters = new String[]{"", "", ""};
@@ -84,7 +84,7 @@ public class ManterCliente extends javax.swing.JInternalFrame {
         });
 
         try {
-            boxTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) # ####-####")));
+            boxTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(**) * ****-****")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -419,8 +419,10 @@ public class ManterCliente extends javax.swing.JInternalFrame {
     private void botaoEditarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoEditarMouseReleased
         if (linhaAtual_ != -1) {
             Cliente cliente = new Cliente();
-            if (boxNome.getText().isEmpty() || boxSobrenome.getText().isEmpty() || boxTelefone.getText().isEmpty()) {
+            if (boxNome.getText().isEmpty() || boxSobrenome.getText().isEmpty() || boxTelefone.getText().replaceAll("\\D+", "").isEmpty()) {
                 Dialog.main("Um ou mais campos não foram preenchidos.");
+            } else if (boxTelefone.getText().replaceAll("\\D+", "").length() < 11) {
+                Dialog.main("O telefone não é válido.");
             } else {
                 cliente.setNome(boxNome.getText());
                 cliente.setSobrenome(boxSobrenome.getText());
