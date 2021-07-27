@@ -1,6 +1,6 @@
-package app.delivery.model.beans;
+package app.delivery.model.beans.formatos;
 
-public abstract class Formato {
+public abstract class FormatoAbstract {
     private int id;
 
     public int getId() {

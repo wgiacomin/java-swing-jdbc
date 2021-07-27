@@ -1,17 +1,15 @@
 package app.delivery.views.main;
 
 import app.delivery.views.cliente.ManterCliente;
+import app.delivery.views.pedido.ManterPedido;
 import java.awt.Dimension;
 
-
 public class main extends javax.swing.JFrame {
-
 
     public main() {
         initComponents();
         setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -22,6 +20,8 @@ public class main extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         menuCadastrar = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        manterPedido = new javax.swing.JMenuItem();
 
         jInternalFrame1.setVisible(true);
 
@@ -62,6 +62,18 @@ public class main extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
+        jMenu1.setText("Pedidos");
+
+        manterPedido.setText("Manter");
+        manterPedido.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                manterPedidoMouseReleased(evt);
+            }
+        });
+        jMenu1.add(manterPedido);
+
+        jMenuBar1.add(jMenu1);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -79,15 +91,24 @@ public class main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuCadastrarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuCadastrarMouseReleased
-        ManterCliente clientesManter = new ManterCliente();
-        this.mainScreen.add(clientesManter);
+        ManterCliente manterCliente = new ManterCliente();
+        this.mainScreen.add(manterCliente);
         Dimension desktopSize = this.getSize();
-        Dimension jInternalFrameSize = clientesManter.getSize();
-        clientesManter.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+        Dimension jInternalFrameSize = manterCliente.getSize();
+        manterCliente.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
                 (desktopSize.height - jInternalFrameSize.height - 100) / 2);
-        clientesManter.setVisible(true);
+        manterCliente.setVisible(true);
     }//GEN-LAST:event_menuCadastrarMouseReleased
 
+    private void manterPedidoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manterPedidoMouseReleased
+        ManterPedido manterPedido = new ManterPedido();
+        this.mainScreen.add(manterPedido);
+        Dimension desktopSize = this.getSize();
+        Dimension jInternalFrameSize = manterPedido.getSize();
+        manterPedido.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                (desktopSize.height - jInternalFrameSize.height - 100) / 2);
+        manterPedido.setVisible(true);
+    }//GEN-LAST:event_manterPedidoMouseReleased
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -123,9 +144,11 @@ public class main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JInternalFrame jInternalFrame1;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JDesktopPane mainScreen;
+    private javax.swing.JMenuItem manterPedido;
     private javax.swing.JMenuItem menuCadastrar;
     // End of variables declaration//GEN-END:variables
 }

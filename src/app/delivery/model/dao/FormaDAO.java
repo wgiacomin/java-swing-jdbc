@@ -1,6 +1,6 @@
 package app.delivery.model.dao;
 
-import app.delivery.model.beans.Formato;
+import app.delivery.model.beans.formatos.FormatoAbstract;
 import app.delivery.model.beans.formatos.Circulo;
 import app.delivery.model.beans.formatos.Quadrado;
 import app.delivery.model.beans.formatos.Triangulo;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import app.delivery.model.dao.utils.ConnectionFactory;
 
-public class FormaDAO implements DAOInterface<Formato> {
+public class FormaDAO implements DAOInterface<FormatoAbstract> {
 
     private static final String QUERY_BUSCAR = "SELECT id, medida, tipo_forma FROM forma WHERE id = ?;";
     private static final String QUERY_BUSCAR_TODOS = "SELECT id, medida, tipo_forma FROM forma;";
@@ -31,8 +31,8 @@ public class FormaDAO implements DAOInterface<Formato> {
         con = factory.getConnection();
     }
 
-    private Formato extrairForma(ResultSet rs) throws SQLException, DAOException {
-        Formato forma;
+    private FormatoAbstract extrairForma(ResultSet rs) throws SQLException, DAOException {
+        FormatoAbstract forma;
         int tipoForma = rs.getInt("tipo_forma");
 
         switch(tipoForma){
@@ -56,7 +56,7 @@ public class FormaDAO implements DAOInterface<Formato> {
     }
     
     @Override
-    public Formato buscar(Formato forma) throws DAOException {
+    public FormatoAbstract buscar(FormatoAbstract forma) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(QUERY_BUSCAR)) {
             st.setInt(1, forma.getId());
             ResultSet rs = st.executeQuery();
@@ -71,12 +71,12 @@ public class FormaDAO implements DAOInterface<Formato> {
         }
     }
 
-    public Formato buscarPorId(int idForma) throws DAOException {
+    public FormatoAbstract buscarPorId(int idForma) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(QUERY_BUSCAR)) {
             st.setInt(1, idForma);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                Formato forma = extrairForma(rs);
+                FormatoAbstract forma = extrairForma(rs);
                 return forma;
             } else {
                 return null;
@@ -87,8 +87,8 @@ public class FormaDAO implements DAOInterface<Formato> {
     }
 
     @Override
-    public List<Formato> buscarTodos() throws DAOException {
-        List<Formato> lista = new ArrayList<>();
+    public List<FormatoAbstract> buscarTodos() throws DAOException {
+        List<FormatoAbstract> lista = new ArrayList<>();
         try (PreparedStatement st = con.prepareStatement(QUERY_BUSCAR_TODOS)) {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -103,7 +103,7 @@ public class FormaDAO implements DAOInterface<Formato> {
     }
 
     @Override
-    public void inserir(Formato forma) throws DAOException {
+    public void inserir(FormatoAbstract forma) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(QUERY_INSERIR)) {
             if(forma instanceof Circulo){
                 st.setDouble(1,((Circulo) forma).getRaio());
@@ -126,7 +126,7 @@ public class FormaDAO implements DAOInterface<Formato> {
     }
 
     @Override
-    public void remover(Formato forma) throws DAOException {
+    public void remover(FormatoAbstract forma) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(QUERY_REMOVER)) {
             st.setInt(1, forma.getId());
             st.executeUpdate();
@@ -137,7 +137,7 @@ public class FormaDAO implements DAOInterface<Formato> {
     }
 
     @Override
-    public void editar(Formato forma) throws DAOException {
+    public void editar(FormatoAbstract forma) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(QUERY_EDITAR)) {
             if(forma instanceof Circulo){
                 st.setDouble(1,((Circulo) forma).getRaio());

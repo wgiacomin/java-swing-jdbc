@@ -1,8 +1,6 @@
 package app.delivery.model.beans.formatos;
 
-import app.delivery.model.beans.Formato;
-
-public class Circulo extends Formato {
+public class Circulo extends FormatoAbstract {
     private double raio;
 
     public double getRaio() {

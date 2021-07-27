@@ -1,8 +1,6 @@
 package app.delivery.model.beans.formatos;
 
-import app.delivery.model.beans.Formato;
-
-public class Quadrado extends Formato {
+public class Quadrado extends FormatoAbstract {
     private double lado;
 
     public double getLado() {

@@ -1,5 +1,6 @@
 package app.delivery.model.beans;
 
+import app.delivery.model.beans.formatos.FormatoAbstract;
 import app.delivery.model.beans.Pedido;
 import java.util.List;
 import app.delivery.model.dao.FormaDAO;
@@ -10,7 +11,7 @@ import app.exceptions.DAOException;
 public class Pizza {
     private int id;
     private Pedido pedido;
-    private Formato formato;
+    private FormatoAbstract formato;
     private List<Sabor> sabores;
 
     public int getId() {
@@ -29,11 +30,11 @@ public class Pizza {
         this.pedido = pedido;
     }
 
-    public Formato getFormato() {
+    public FormatoAbstract getFormato() {
         return formato;
     }
 
-    public void setFormato(Formato formato) {
+    public void setFormato(FormatoAbstract formato) {
         this.formato = formato;
     }
 

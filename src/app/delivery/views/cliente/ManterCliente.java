@@ -381,7 +381,7 @@ public class ManterCliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_filtrarTelefoneKeyReleased
 
     private void TabelaClientesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaClientesMousePressed
-        linhaAtual_ = TabelaClientes.rowAtPoint(evt.getPoint());
+        linhaAtual_ = TabelaClientes.getSelectedRow();
         if (linhaAtual_ != -1) {
             Cliente cliente = clientesTabela.getCliente(linhaAtual_);
             linhaAtual.setText(String.valueOf(cliente.getId()));

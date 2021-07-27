@@ -1,6 +1,6 @@
 package app.delivery.model.dao;
 
-import app.delivery.model.beans.Formato;
+import app.delivery.model.beans.formatos.FormatoAbstract;
 import app.delivery.model.beans.Pedido;
 import app.delivery.model.beans.Pizza;
 import app.delivery.model.beans.formatos.Circulo;
@@ -42,7 +42,7 @@ public class PizzaDAO implements DAOInterface<Pizza> {
         Pedido pedido = new Pedido();
         pedido.setId(rs.getInt("id_pedido"));
         
-        Formato formato;
+        FormatoAbstract formato;
         switch(rs.getInt("tipo_forma")){
             case TipoForma.CIRCULO:
                 formato = new Circulo();
