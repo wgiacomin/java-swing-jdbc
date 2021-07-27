@@ -1,9 +1,5 @@
 package app.delivery.model.beans;
 
-import app.delivery.model.beans.Cliente;
-import app.delivery.model.dao.ClienteDAO;
-import app.exceptions.DAOException;
-
 public class Pedido {
     private int id;
     private Cliente cliente;

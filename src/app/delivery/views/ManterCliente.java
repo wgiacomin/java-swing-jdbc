@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package app.delivery.views.cliente;
+package app.delivery.views;
 
 import app.delivery.controller.cliente.ClienteTabela;
 import app.delivery.model.beans.Cliente;

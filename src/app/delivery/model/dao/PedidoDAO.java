@@ -11,7 +11,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import app.delivery.model.dao.utils.ConnectionFactory;
 
 public class PedidoDAO implements DAOInterface<Pedido> {
 
@@ -24,9 +23,11 @@ public class PedidoDAO implements DAOInterface<Pedido> {
 
     private Connection con = null;
 
-    public PedidoDAO() throws DAOException {
-        ConnectionFactory factory = new ConnectionFactory();
-        con = factory.getConnection();
+    public PedidoDAO(Connection con) throws DAOException {
+        if (con == null) {
+            throw new DAOException("Conexão nula ao criar.");
+        }
+        this.con = con;
     }
 
     private Pedido extrairPedido(ResultSet rs) throws SQLException {

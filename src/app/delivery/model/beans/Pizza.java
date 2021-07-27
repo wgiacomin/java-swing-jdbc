@@ -1,12 +1,7 @@
 package app.delivery.model.beans;
 
 import app.delivery.model.beans.formatos.FormatoAbstract;
-import app.delivery.model.beans.Pedido;
 import java.util.List;
-import app.delivery.model.dao.FormaDAO;
-import app.delivery.model.dao.PedidoDAO;
-import app.delivery.model.dao.SaborDAO;
-import app.exceptions.DAOException;
 
 public class Pizza {
     private int id;

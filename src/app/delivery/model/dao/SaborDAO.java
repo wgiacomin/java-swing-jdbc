@@ -1,6 +1,5 @@
 package app.delivery.model.dao;
 
-import app.delivery.model.beans.Pedido;
 import app.delivery.model.beans.Sabor;
 import app.delivery.model.dao.utils.DAOInterface;
 import app.exceptions.DAOException;
@@ -12,25 +11,26 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import app.delivery.model.beans.Pizza;
-import app.delivery.model.dao.utils.ConnectionFactory;
 
 public class SaborDAO implements DAOInterface<Sabor> {
 
     private static final String QUERY_BUSCAR = "SELECT id, nome FROM sabor WHERE id = ?;";
-    private static final String QUERY_BUSCAR_TODOS = "SELECT id, nome FROM sabor;";
-    private static final String QUERY_BUSCAR_POR_PIZZA = "SELECT s.id, s.nome FROM ((pizza_sabor ps\n" +
-                                                            "INNER JOIN sabor s ON ps.id_sabor = s.id)\n" +
-                                                            "INNER JOIN pizza p ON ps.id_pizza = p.id)\n" +
-                                                            "WHERE p.id = ?;";
+    private static final String QUERY_BUSCAR_TODOS = "SELECT id, nome FROM sabor ORDER BY nome ASC;";
+    private static final String QUERY_BUSCAR_POR_PIZZA = "SELECT s.id, s.nome FROM ((pizza_sabor ps\n"
+            + "INNER JOIN sabor s ON ps.id_sabor = s.id)\n"
+            + "INNER JOIN pizza p ON ps.id_pizza = p.id)\n"
+            + "WHERE p.id = ?;";
     private static final String QUERY_INSERIR = "INSERT INTO sabor(nome) VALUES (?);";
     private static final String QUERY_REMOVER = "DELETE FROM sabor WHERE id = ?;";
     private static final String QUERY_EDITAR = "UPDATE sabor SET nome = ? WHERE id = ?;";
 
     private Connection con = null;
 
-    public SaborDAO() throws DAOException {
-        ConnectionFactory factory = new ConnectionFactory();
-        con = factory.getConnection();
+    public SaborDAO(Connection con) throws DAOException {
+        if (con == null) {
+            throw new DAOException("Conexão nula ao criar.");
+        }
+        this.con = con;
     }
 
     private Sabor extrairSabor(ResultSet rs) throws SQLException {
@@ -71,7 +71,7 @@ public class SaborDAO implements DAOInterface<Sabor> {
                     + QUERY_BUSCAR_TODOS, e);
         }
     }
-    
+
     public List<Sabor> buscarPorPizza(Pizza pizza) throws DAOException {
         List<Sabor> lista = new ArrayList<>();
         try (PreparedStatement st = con.prepareStatement(QUERY_BUSCAR_POR_PIZZA)) {

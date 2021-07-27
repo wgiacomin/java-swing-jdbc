@@ -11,6 +11,7 @@ public class ClienteComboBox extends DefaultComboBoxModel<String> {
     public ClienteComboBox() {
         listaClientes = ClienteController.buscarTodos();
         refreshData();
+        this.setSelectedItem(null);
     }
 
     public void filterElements(String telefone) {
@@ -23,6 +24,9 @@ public class ClienteComboBox extends DefaultComboBoxModel<String> {
         listaClientes.forEach(e -> {
             this.addElement(e.getNome());
         });
-        this.setSelectedItem(null);
+    }
+    
+    public Cliente getCliente(int index){
+        return listaClientes.get(index);
     }
 }

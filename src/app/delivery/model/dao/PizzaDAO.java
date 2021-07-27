@@ -46,15 +46,15 @@ public class PizzaDAO implements DAOInterface<Pizza> {
         switch(rs.getInt("tipo_forma")){
             case TipoForma.CIRCULO:
                 formato = new Circulo();
-                ((Circulo) formato).setRaio(rs.getDouble("medida"));
+                ((Circulo) formato).setDimension(rs.getDouble("medida"));
                 break;
             case TipoForma.QUADRADO:
                 formato = new Quadrado();
-                ((Quadrado) formato).setLado(rs.getDouble("medida"));
+                ((Quadrado) formato).setDimension(rs.getDouble("medida"));
                 break;
             case TipoForma.TRIANGULO:
                 formato = new Triangulo();
-                ((Triangulo) formato).setLado(rs.getDouble("medida"));
+                ((Triangulo) formato).setDimension(rs.getDouble("medida"));
                 break;
             default:
                 throw new DAOException("Erro buscando categoria de forma");

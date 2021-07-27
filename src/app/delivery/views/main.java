@@ -1,7 +1,9 @@
-package app.delivery.views.main;
+package app.delivery.views;
 
-import app.delivery.views.cliente.ManterCliente;
-import app.delivery.views.pedido.ManterPedido;
+import app.delivery.model.dao.utils.ConnectionFactory;
+import app.delivery.views.ManterCliente;
+import app.delivery.views.ManterPedido;
+import app.exceptions.DAOException;
 import java.awt.Dimension;
 
 public class main extends javax.swing.JFrame {
@@ -9,6 +11,11 @@ public class main extends javax.swing.JFrame {
     public main() {
         initComponents();
         setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
+        try (ConnectionFactory factory = new ConnectionFactory()) {
+            factory.getConnection();
+        } catch (DAOException e) {
+            Dialog.main("Sem acesso ao banco! O aplicativo pode apresentar comportamento inesperado.");
+        }
     }
 
     @SuppressWarnings("unchecked")

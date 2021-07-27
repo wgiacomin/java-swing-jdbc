@@ -35,18 +35,18 @@ public class FormaDAO implements DAOInterface<FormatoAbstract> {
         FormatoAbstract forma;
         int tipoForma = rs.getInt("tipo_forma");
 
-        switch(tipoForma){
+        switch (tipoForma) {
             case TipoForma.CIRCULO:
                 forma = new Circulo();
-                ((Circulo) forma).setRaio(rs.getDouble("medida"));
+                ((Circulo) forma).setDimension(rs.getDouble("medida"));
                 break;
             case TipoForma.QUADRADO:
                 forma = new Quadrado();
-                ((Quadrado) forma).setLado(rs.getDouble("medida"));
+                ((Quadrado) forma).setDimension(rs.getDouble("medida"));
                 break;
             case TipoForma.TRIANGULO:
                 forma = new Triangulo();
-                ((Triangulo) forma).setLado(rs.getDouble("medida"));
+                ((Triangulo) forma).setDimension(rs.getDouble("medida"));
                 break;
             default:
                 throw new DAOException("Erro buscando categoria de forma");
@@ -54,7 +54,7 @@ public class FormaDAO implements DAOInterface<FormatoAbstract> {
         forma.setId(rs.getInt("id"));
         return forma;
     }
-    
+
     @Override
     public FormatoAbstract buscar(FormatoAbstract forma) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(QUERY_BUSCAR)) {
@@ -105,14 +105,14 @@ public class FormaDAO implements DAOInterface<FormatoAbstract> {
     @Override
     public void inserir(FormatoAbstract forma) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(QUERY_INSERIR)) {
-            if(forma instanceof Circulo){
-                st.setDouble(1,((Circulo) forma).getRaio());
+            if (forma instanceof Circulo) {
+                st.setDouble(1, forma.getDimension());
                 st.setInt(2, TipoForma.CIRCULO);
-            } else if(forma instanceof Quadrado){
-                st.setDouble(1,((Quadrado) forma).getLado());
+            } else if (forma instanceof Quadrado) {
+                st.setDouble(1, forma.getDimension());
                 st.setInt(2, TipoForma.QUADRADO);
-            } else if(forma instanceof Triangulo){
-                st.setDouble(1,((Triangulo) forma).getLado());
+            } else if (forma instanceof Triangulo) {
+                st.setDouble(1, forma.getDimension());
                 st.setInt(2, TipoForma.TRIANGULO);
             } else {
                 throw new DAOException("Erro no tipo de forma ao inserir forma: "
@@ -139,14 +139,14 @@ public class FormaDAO implements DAOInterface<FormatoAbstract> {
     @Override
     public void editar(FormatoAbstract forma) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(QUERY_EDITAR)) {
-            if(forma instanceof Circulo){
-                st.setDouble(1,((Circulo) forma).getRaio());
+            if (forma instanceof Circulo) {
+                st.setDouble(1, forma.getDimension());
                 st.setInt(2, TipoForma.CIRCULO);
-            } else if(forma instanceof Quadrado){
-                st.setDouble(1,((Quadrado) forma).getLado());
+            } else if (forma instanceof Quadrado) {
+                st.setDouble(1, forma.getDimension());
                 st.setInt(2, TipoForma.QUADRADO);
-            } else if(forma instanceof Triangulo){
-                st.setDouble(1,((Triangulo) forma).getLado());
+            } else if (forma instanceof Triangulo) {
+                st.setDouble(1, forma.getDimension());
                 st.setInt(2, TipoForma.TRIANGULO);
             } else {
                 throw new DAOException("Erro no tipo de forma ao inserir forma: "
