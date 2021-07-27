@@ -15,7 +15,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import app.delivery.model.dao.utils.ConnectionFactory;
 import app.delivery.model.dao.utils.TipoForma;
 
 public class PizzaDAO implements DAOInterface<Pizza> {
@@ -29,21 +28,23 @@ public class PizzaDAO implements DAOInterface<Pizza> {
 
     private Connection con = null;
 
-    public PizzaDAO() throws DAOException {
-        ConnectionFactory factory = new ConnectionFactory();
-        con = factory.getConnection();
+    public PizzaDAO(Connection con) throws DAOException {
+        if (con == null) {
+            throw new DAOException("Conexão nula ao criar.");
+        }
+        this.con = con;
     }
 
     private Pizza extrairPizza(ResultSet rs) throws SQLException, DAOException {
         Pizza pizza = new Pizza();
 
         pizza.setId(rs.getInt("id"));
-        
+
         Pedido pedido = new Pedido();
         pedido.setId(rs.getInt("id_pedido"));
-        
+
         FormatoAbstract formato;
-        switch(rs.getInt("tipo_forma")){
+        switch (rs.getInt("tipo_forma")) {
             case TipoForma.CIRCULO:
                 formato = new Circulo();
                 ((Circulo) formato).setDimension(rs.getDouble("medida"));
@@ -60,7 +61,7 @@ public class PizzaDAO implements DAOInterface<Pizza> {
                 throw new DAOException("Erro buscando categoria de forma");
         }
         formato.setId(rs.getInt("id_forma"));
-        
+
         pizza.setFormato(formato);
         return pizza;
     }
