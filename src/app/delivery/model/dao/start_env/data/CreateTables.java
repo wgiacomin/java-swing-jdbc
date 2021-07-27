@@ -45,9 +45,16 @@ public class CreateTables {
                     "        REFERENCES pedido (id) ON DELETE CASCADE, " +
                     "    CONSTRAINT pizza_id_forma_fkey FOREIGN KEY (id_forma)" +
                     "        REFERENCES forma (id) ON DELETE CASCADE)");
+            query.executeUpdate("CREATE TABLE tipo_sabor (" +
+                    "    id serial PRIMARY KEY," +
+                    "    nome text," +
+                    "    custo double)");
             query.executeUpdate("CREATE TABLE sabor (" +
                     "    id serial PRIMARY KEY," +
-                    "    nome text)");
+                    "    nome text," +
+                    "    id_tipo integer," +
+                    "    CONSTRAINT sabor_id_tipo_fkey FOREIGN KEY (id_tipo)" +
+                    "        REFERENCES tipo_sabor (id) ");
             query.executeUpdate("CREATE TABLE pizza_sabor (" +
                     "    id serial PRIMARY KEY," +
                     "    id_pizza integer," +
