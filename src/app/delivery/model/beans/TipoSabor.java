@@ -1,11 +1,11 @@
 package app.delivery.model.beans;
 
-public class Sabor {
+public class TipoSabor {
     private int id;
     private String nome;
-    private int idTipo;
+    private double custo;
 
-    public Sabor() {
+    public TipoSabor() {
     }
 
     public int getId() {
@@ -24,11 +24,11 @@ public class Sabor {
         this.nome = nome;
     }
 
-    public int getIdTipo() {
-        return idTipo;
+    public double getCusto() {
+        return custo;
     }
 
-    public void setIdTipo(int idTipo) {
-        this.idTipo = idTipo;
+    public void setCusto(double custo) {
+        this.custo = custo;
     }
 }

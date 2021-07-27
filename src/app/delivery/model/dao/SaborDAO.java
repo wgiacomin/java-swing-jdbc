@@ -14,15 +14,15 @@ import app.delivery.model.beans.Pizza;
 
 public class SaborDAO implements DAOInterface<Sabor> {
 
-    private static final String QUERY_BUSCAR = "SELECT id, nome FROM sabor WHERE id = ?;";
-    private static final String QUERY_BUSCAR_TODOS = "SELECT id, nome FROM sabor ORDER BY nome ASC;";
-    private static final String QUERY_BUSCAR_POR_PIZZA = "SELECT s.id, s.nome FROM ((pizza_sabor ps\n"
+    private static final String QUERY_BUSCAR = "SELECT id, nome, id_tipo FROM sabor WHERE id = ?;";
+    private static final String QUERY_BUSCAR_TODOS = "SELECT id, nome, id_tipo FROM sabor ORDER BY nome ASC;";
+    private static final String QUERY_BUSCAR_POR_PIZZA = "SELECT s.id, s.nome, id_tipo FROM ((pizza_sabor ps\n"
             + "INNER JOIN sabor s ON ps.id_sabor = s.id)\n"
             + "INNER JOIN pizza p ON ps.id_pizza = p.id)\n"
             + "WHERE p.id = ?;";
-    private static final String QUERY_INSERIR = "INSERT INTO sabor(nome) VALUES (?);";
+    private static final String QUERY_INSERIR = "INSERT INTO sabor(nome, id_tipo) VALUES (?, ?);";
     private static final String QUERY_REMOVER = "DELETE FROM sabor WHERE id = ?;";
-    private static final String QUERY_EDITAR = "UPDATE sabor SET nome = ? WHERE id = ?;";
+    private static final String QUERY_EDITAR = "UPDATE sabor SET nome = ?, id_tipo = ? WHERE id = ?;";
 
     private Connection con = null;
 
@@ -38,6 +38,7 @@ public class SaborDAO implements DAOInterface<Sabor> {
 
         sabor.setId(rs.getInt("id"));
         sabor.setNome(rs.getString("nome"));
+        sabor.setIdTipo(rs.getInt("id_tipo"));
         return sabor;
     }
 
@@ -91,6 +92,7 @@ public class SaborDAO implements DAOInterface<Sabor> {
     public void inserir(Sabor sabor) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(QUERY_INSERIR)) {
             st.setString(1, sabor.getNome());
+            st.setInt(2, sabor.getIdTipo());
             st.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Erro ao criar sabor: "
@@ -113,7 +115,8 @@ public class SaborDAO implements DAOInterface<Sabor> {
     public void editar(Sabor sabor) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(QUERY_EDITAR)) {
             st.setString(1, sabor.getNome());
-            st.setInt(2, sabor.getId());
+            st.setInt(2, sabor.getIdTipo());
+            st.setInt(3, sabor.getId());
             st.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Erro ao editar sabor: "
