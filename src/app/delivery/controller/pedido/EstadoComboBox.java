@@ -19,4 +19,8 @@ public class EstadoComboBox extends DefaultComboBoxModel<String> {
             this.addElement(e.getEstado());
         });
     }
+    
+    public Estado getEstado(int index){
+        return listaEstados.get(index);
+    }
 }

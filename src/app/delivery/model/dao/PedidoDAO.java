@@ -19,12 +19,12 @@ public class PedidoDAO implements DAOInterface<Pedido> {
     private static final String QUERY_BUSCAR_TODOS = "SELECT pedido.id, id_cliente, c.nome, id_estado, e.nome as estado\n"
             + " FROM pedido"
             + " JOIN cliente c on c.id = pedido.id_cliente"
-            + " JOIN estado e on e.id = pedido.id_estado";
+            + " JOIN estado e on e.id = pedido.id_estado ORDER BY pedido.id ASC";
     private static final String QUERY_BUSCAR_POR_CLIENTE = "SELECT id, id_cliente FROM pedido WHERE id_cliente = ?;";
     private static final String QUERY_INSERIR = "INSERT INTO pedido(id_cliente, valor_total, id_estado) VALUES (?, ?, 1);";
     private static final String QUERY_REMOVER = "DELETE FROM pedido WHERE id = ?;";
     private static final String QUERY_EDITAR = "UPDATE pedido SET valor_total = ? WHERE id = ?;";
-    private static final String QUERY_EDITAR_STATUS = "UPDATE pedido SET valor_total = ?, id_estado = ? WHERE id = ?;";
+    private static final String QUERY_EDITAR_STATUS = "UPDATE pedido SET id_estado = ? WHERE id = ?;";
 
     private Connection con = null;
 
@@ -142,6 +142,17 @@ public class PedidoDAO implements DAOInterface<Pedido> {
         } catch (SQLException e) {
             throw new DAOException("Erro ao editar pedido: "
                     + QUERY_EDITAR, e);
+        }
+    }
+    
+        public void editarStatus(Pedido pedido) throws DAOException {
+        try (PreparedStatement st = con.prepareStatement(QUERY_EDITAR_STATUS)) {
+            st.setDouble(1, pedido.getEstado().getId());
+            st.setInt(2, pedido.getId());
+            st.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Erro ao editar pedido: "
+                    + QUERY_EDITAR_STATUS, e);
         }
     }
 

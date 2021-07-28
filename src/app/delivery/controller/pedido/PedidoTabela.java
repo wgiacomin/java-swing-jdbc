@@ -53,8 +53,8 @@ public class PedidoTabela extends AbstractTableModel {
     }
 
     public void refreshTabela() {
-//        this.listaPedidos = ClienteController.buscarTodos();
-//        this.fireTableDataChanged();
+        this.listaPedidos = PedidoController.buscarTodos();
+        this.fireTableDataChanged();
     }
     
 }
