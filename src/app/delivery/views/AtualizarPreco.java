@@ -6,7 +6,7 @@ import app.delivery.model.beans.TipoSabor;
 
 
 public class AtualizarPreco extends javax.swing.JInternalFrame {
-    CategoriaComboBox categoriaComboBox;
+    private final CategoriaComboBox categoriaComboBox;
 
     public AtualizarPreco() {
         categoriaComboBox = new CategoriaComboBox();

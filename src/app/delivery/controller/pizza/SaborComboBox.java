@@ -35,4 +35,14 @@ public class SaborComboBox extends DefaultComboBoxModel<String> {
         }
         return null;
     }
+    
+    
+    public void refresh() {
+        this.removeAllElements();
+        listaSabores = SaborController.buscarTodos();
+        listaSabores.forEach(e -> {
+            this.addElement(e.getNome());
+        });
+        this.setSelectedItem(null);
+    }
 }

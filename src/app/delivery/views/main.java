@@ -29,8 +29,9 @@ public class main extends javax.swing.JFrame {
         menuCadastrar = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         manterPedido = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
+        menu1 = new javax.swing.JMenu();
         precosCm = new javax.swing.JMenuItem();
+        adicionarSabor = new javax.swing.JMenuItem();
 
         jInternalFrame1.setVisible(true);
 
@@ -83,7 +84,7 @@ public class main extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu3.setText("Pizzas");
+        menu1.setText("Pizzas");
 
         precosCm.setText("Preços por cm²");
         precosCm.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -91,9 +92,17 @@ public class main extends javax.swing.JFrame {
                 precosCmMouseReleased(evt);
             }
         });
-        jMenu3.add(precosCm);
+        menu1.add(precosCm);
 
-        jMenuBar1.add(jMenu3);
+        adicionarSabor.setText("Adicionar sabor");
+        adicionarSabor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                adicionarSaborMousePressed(evt);
+            }
+        });
+        menu1.add(adicionarSabor);
+
+        jMenuBar1.add(menu1);
 
         setJMenuBar(jMenuBar1);
 
@@ -141,6 +150,16 @@ public class main extends javax.swing.JFrame {
         atualizarPreco.setVisible(true);
     }//GEN-LAST:event_precosCmMouseReleased
 
+    private void adicionarSaborMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adicionarSaborMousePressed
+        AdicionarSabor adicionarSabor = new AdicionarSabor();
+        this.mainScreen.add(adicionarSabor);
+        Dimension desktopSize = this.getSize();
+        Dimension jInternalFrameSize = adicionarSabor.getSize();
+        adicionarSabor.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                (desktopSize.height - jInternalFrameSize.height - 100) / 2);
+        adicionarSabor.setVisible(true);
+    }//GEN-LAST:event_adicionarSaborMousePressed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -174,13 +193,14 @@ public class main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem adicionarSabor;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JDesktopPane mainScreen;
     private javax.swing.JMenuItem manterPedido;
+    private javax.swing.JMenu menu1;
     private javax.swing.JMenuItem menuCadastrar;
     private javax.swing.JMenuItem precosCm;
     // End of variables declaration//GEN-END:variables

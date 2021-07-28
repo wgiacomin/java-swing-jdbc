@@ -52,7 +52,7 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu3">
+        <Menu class="javax.swing.JMenu" name="menu1">
           <Properties>
             <Property name="text" type="java.lang.String" value="Pizzas"/>
           </Properties>
@@ -63,6 +63,14 @@
               </Properties>
               <Events>
                 <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="precosCmMouseReleased"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="adicionarSabor">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Adicionar sabor"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="adicionarSaborMousePressed"/>
               </Events>
             </MenuItem>
           </SubComponents>
