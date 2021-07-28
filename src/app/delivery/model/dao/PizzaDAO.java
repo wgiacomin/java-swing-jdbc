@@ -113,10 +113,16 @@ public class PizzaDAO implements DAOInterface<Pizza> {
     }
 
     @Override
-    public void inserir(Pizza pizza) throws DAOException {
+    public int inserir(Pizza pizza) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(QUERY_INSERIR)) {
             st.setInt(1, pizza.getPedido().getId());
             st.executeUpdate();
+            ResultSet rs = con.createStatement().executeQuery("SELECT lastval();");
+            if (rs.next()) {
+                return rs.getInt(1);
+            } else {
+                return -1;
+            }
         } catch (SQLException e) {
             throw new DAOException("Erro ao criar pizza: "
                     + QUERY_INSERIR, e);

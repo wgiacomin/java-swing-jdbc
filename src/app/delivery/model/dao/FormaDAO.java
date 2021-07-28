@@ -103,7 +103,7 @@ public class FormaDAO implements DAOInterface<FormatoAbstract> {
     }
 
     @Override
-    public void inserir(FormatoAbstract forma) throws DAOException {
+    public int inserir(FormatoAbstract forma) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(QUERY_INSERIR)) {
             if (forma instanceof Circulo) {
                 st.setDouble(1, forma.getDimension());
@@ -123,6 +123,7 @@ public class FormaDAO implements DAOInterface<FormatoAbstract> {
             throw new DAOException("Erro ao criar forma: "
                     + QUERY_INSERIR, e);
         }
+        return 0;
     }
 
     @Override

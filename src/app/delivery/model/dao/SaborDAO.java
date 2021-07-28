@@ -10,7 +10,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import app.delivery.model.beans.Pizza;
 import app.delivery.model.beans.TipoSabor;
 
 public class SaborDAO implements DAOInterface<Sabor> {
@@ -106,7 +105,7 @@ public class SaborDAO implements DAOInterface<Sabor> {
     }
 
     @Override
-    public void inserir(Sabor sabor) throws DAOException {
+    public int inserir(Sabor sabor) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(QUERY_INSERIR)) {
             st.setString(1, sabor.getNome());
             st.setInt(2, sabor.getTipo().getId());
@@ -115,6 +114,7 @@ public class SaborDAO implements DAOInterface<Sabor> {
             throw new DAOException("Erro ao criar sabor: "
                     + QUERY_INSERIR, e);
         }
+        return 0;
     }
 
     @Override

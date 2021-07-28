@@ -2,7 +2,9 @@ package app.delivery.controller.pedido;
 
 import app.delivery.model.beans.Cliente;
 import app.delivery.model.beans.Pedido;
+import app.delivery.model.beans.Pizza;
 import app.delivery.model.dao.PedidoDAO;
+import app.delivery.model.dao.PizzaDAO;
 import app.delivery.model.dao.utils.ConnectionFactory;
 import app.exceptions.DAOException;
 import java.util.List;
@@ -29,5 +31,19 @@ public class PedidoController {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static void novoPedido(Pedido pedido, Pizza pizza) {
+        try (ConnectionFactory factory = new ConnectionFactory()) {
+            PedidoDAO bd = new PedidoDAO(factory.getConnection());
+            pedido.setId(bd.inserir(pedido));
+            pizza.setPedido(pedido);
+            PizzaDAO pd = new PizzaDAO(factory.getConnection());
+            pizza.setId(pd.inserir(pizza));
+            
+
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -71,7 +71,7 @@ public class ClienteDAO implements DAOInterface<Cliente> {
     }
 
     @Override
-    public void inserir(Cliente cliente) throws DAOException {
+    public int inserir(Cliente cliente) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(QUERY_INSERIR)) {
             st.setString(1, cliente.getNome());
             st.setString(2, cliente.getSobrenome());
@@ -81,6 +81,7 @@ public class ClienteDAO implements DAOInterface<Cliente> {
             throw new DAOException("Erro ao criar cliente: "
                     + QUERY_INSERIR, e);
         }
+        return 0;
     }
 
     @Override

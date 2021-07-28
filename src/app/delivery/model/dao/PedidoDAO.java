@@ -75,7 +75,6 @@ public class PedidoDAO implements DAOInterface<Pedido> {
         List<Pedido> lista = new ArrayList<>();
         try (PreparedStatement st = con.prepareStatement(QUERY_BUSCAR_POR_CLIENTE)) {
             st.setInt(1, cliente.getId());
-
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 lista.add(extrairPedido(rs));
@@ -86,20 +85,22 @@ public class PedidoDAO implements DAOInterface<Pedido> {
         }
     }
 
-    public void inserirCompleto(Pedido pedido, double valor) throws DAOException {
+ 
+    public int inserir(Pedido pedido) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(QUERY_INSERIR)) {
             st.setInt(1, pedido.getCliente().getId());
-            st.setDouble(2, valor);
+            st.setDouble(2, pedido.getTotal());
             st.executeUpdate();
+            ResultSet rs = con.createStatement().executeQuery("SELECT lastval();");
+            if (rs.next()) {
+                return rs.getInt(1);
+            } else {
+                return -1;
+            }
         } catch (SQLException e) {
             throw new DAOException("Erro ao criar pedido: "
                     + QUERY_INSERIR, e);
         }
-    }
-
-    @Override
-    public void inserir(Pedido pedido) throws DAOException {
-        throw new DAOException("Erro de implementação");
     }
 
     @Override

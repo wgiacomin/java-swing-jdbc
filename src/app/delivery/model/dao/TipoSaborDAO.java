@@ -70,7 +70,7 @@ public class TipoSaborDAO implements DAOInterface<TipoSabor> {
     }
 
     @Override
-    public void inserir(TipoSabor tipoSabor) throws DAOException {
+    public int inserir(TipoSabor tipoSabor) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(QUERY_INSERIR)) {
             st.setString(1, tipoSabor.getNome());
             st.setDouble(2, tipoSabor.getCusto());
@@ -79,6 +79,7 @@ public class TipoSaborDAO implements DAOInterface<TipoSabor> {
             throw new DAOException("Erro ao criar tipo de sabor: "
                     + QUERY_INSERIR, e);
         }
+        return 0;
     }
 
     @Override
