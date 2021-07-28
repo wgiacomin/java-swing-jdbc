@@ -456,10 +456,6 @@ public class ManterPedido extends javax.swing.JInternalFrame {
             return;
         }
         Pizza pizza = this.getPizza();
-        if (pizza == null) {
-            Dialog.main("Seleções inválidas!");
-            return;
-        }
         Pedido pedido;
         if (boxPedidos.getSelectedIndex() == 0) {
             pedido = new Pedido();
@@ -489,10 +485,6 @@ public class ManterPedido extends javax.swing.JInternalFrame {
         }
         if (TabelaPizzas.getSelectedRow() >= 0) {
             Pizza pizza = getPizza();
-            if (pizza == null) {
-                Dialog.main("Seleções inválidas!");
-                return;
-            }
             pizza.getFormato().setId(pizzaTabela.getPizza(TabelaPizzas.getSelectedRow()).getFormato().getId());
             PizzaController.editar(pizza);
 
@@ -572,7 +564,7 @@ public class ManterPedido extends javax.swing.JInternalFrame {
                 forma.setDimension(Double.parseDouble(boxTamanho.getText()));
             }
         } catch (TamanhoException e) {
-            Dialog.main("O tamanho inserido é superior ao limite definido.");
+            Dialog.main("O tamanho inserido está fora do limite definido.");
             return null;
         }
         pizza.setFormato(forma);
