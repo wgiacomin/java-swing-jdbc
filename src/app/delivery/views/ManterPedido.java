@@ -18,6 +18,7 @@ import app.delivery.model.beans.formatos.TipoForma;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 public class ManterPedido extends javax.swing.JInternalFrame {
 
@@ -39,7 +40,7 @@ public class ManterPedido extends javax.swing.JInternalFrame {
         boxSabor1.setModel(saborComboBox1);
         boxSabor2.setModel(saborComboBox2);
         boxPedidos.setModel(pedidoList);
-        tabelaPizzas.getColumnModel().getColumn(0).setPreferredWidth(15);
+        TabelaPizzas.getColumnModel().getColumn(0).setPreferredWidth(15);
     }
 
     @SuppressWarnings("unchecked")
@@ -73,7 +74,7 @@ public class ManterPedido extends javax.swing.JInternalFrame {
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        tabelaPizzas = new javax.swing.JTable();
+        TabelaPizzas = new javax.swing.JTable();
         botaoAdicionar = new javax.swing.JButton();
         botaoEditar = new javax.swing.JButton();
         linhaAtual = new javax.swing.JButton();
@@ -274,14 +275,14 @@ public class ManterPedido extends javax.swing.JInternalFrame {
         jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel12.setText("Itens inclusos no pedido:");
 
-        tabelaPizzas.setModel(pizzaTabela);
-        tabelaPizzas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tabelaPizzas.addMouseListener(new java.awt.event.MouseAdapter() {
+        TabelaPizzas.setModel(pizzaTabela);
+        TabelaPizzas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        TabelaPizzas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                tabelaPizzasMousePressed(evt);
+                TabelaPizzasMousePressed(evt);
             }
         });
-        jScrollPane3.setViewportView(tabelaPizzas);
+        jScrollPane3.setViewportView(TabelaPizzas);
 
         botaoAdicionar.setText("Adicionar");
         botaoAdicionar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -421,9 +422,9 @@ public class ManterPedido extends javax.swing.JInternalFrame {
         linhaAtual.setText("");
     }//GEN-LAST:event_boxPedidosMousePressed
 
-    private void tabelaPizzasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaPizzasMousePressed
-        if (tabelaPizzas.getSelectedRow() >= 0) {
-            Pizza pizza = pizzaTabela.getPizza(tabelaPizzas.getSelectedRow());
+    private void TabelaPizzasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaPizzasMousePressed
+        if (TabelaPizzas.getSelectedRow() >= 0) {
+            Pizza pizza = pizzaTabela.getPizza(TabelaPizzas.getSelectedRow());
             if (pizza.getFormato() instanceof Circulo) {
                 boxFormato.setSelectedItem(Formatos.CIRCULO);
             }
@@ -445,9 +446,9 @@ public class ManterPedido extends javax.swing.JInternalFrame {
                 checkSabor2.setSelected(false);
                 saborComboBox2.setSelectedItem(null);
             }
-            linhaAtual.setText(String.valueOf(tabelaPizzas.getSelectedRow()));
+            linhaAtual.setText(String.valueOf(TabelaPizzas.getSelectedRow()));
         }
-    }//GEN-LAST:event_tabelaPizzasMousePressed
+    }//GEN-LAST:event_TabelaPizzasMousePressed
 
     private void botaoAdicionarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoAdicionarMouseReleased
         if (!checkFields()) {
@@ -481,7 +482,7 @@ public class ManterPedido extends javax.swing.JInternalFrame {
         if (!checkFields()) {
             return;
         }
-        if (tabelaPizzas.getSelectedRow() >= 0) {
+        if (TabelaPizzas.getSelectedRow() >= 0) {
             Pizza pizza = getPizza();
             PizzaController.editar(pizza);
             pizzaTabela.refreshTabela(pedidoList.getPedidoId(boxPedidos.getSelectedIndex()));
@@ -492,8 +493,25 @@ public class ManterPedido extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_botaoEditarMouseReleased
 
     private void botaoRemoverMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoRemoverMouseReleased
-        if (tabelaPizzas.getSelectedRow() >= 0) {
-
+        if (TabelaPizzas.getSelectedRow() >= 0) {
+            int linha = TabelaPizzas.getSelectedRow();
+            Object[] opcoes = {"Sim", "Não"};
+            Object defaultChoice = opcoes[1];
+            int input = JOptionPane.showOptionDialog(null,
+                    "Tem certeza que deseja remover o cliente selecionado?",
+                    "Atenção!",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    opcoes,
+                    defaultChoice);
+            if (input == 0) {
+                Pizza pizza = pizzaTabela.getPizza(linha);
+                PizzaController.remover(pizza);
+                pizzaTabela.removePizza(linha);
+                boxPreco.setText(pizzaTabela.getValorTotal());
+                linhaAtual.setText("");
+            }
         } else {
             Dialog.main("Nenhuma linha na tabela selecionada!");
         }
@@ -506,17 +524,15 @@ public class ManterPedido extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_boxSabor2ItemStateChanged
 
     private void boxTamanhoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_boxTamanhoKeyReleased
-        if (checkTamanho.isSelected() && checkArea.isSelected()) {
-            checkArea.setSelected(false);
-            boxArea.setText("");
-        }
+        checkTamanho.setSelected(true);
+        checkArea.setSelected(false);
+        boxArea.setText("");
     }//GEN-LAST:event_boxTamanhoKeyReleased
 
     private void boxAreaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_boxAreaKeyReleased
-        if (checkTamanho.isSelected() && checkArea.isSelected()) {
-            checkArea.setSelected(false);
-            boxArea.setText("");
-        }
+        checkTamanho.setSelected(false);
+        checkArea.setSelected(true);
+        boxTamanho.setText("");
     }//GEN-LAST:event_boxAreaKeyReleased
 
     private Pizza getPizza() {
@@ -549,8 +565,8 @@ public class ManterPedido extends javax.swing.JInternalFrame {
         }
 
         pizza.setSabores(sabores);
-        if (tabelaPizzas.getSelectedRow() >= 0) {
-            pizza.setId(pizzaTabela.getPizza(tabelaPizzas.getSelectedRow()).getId());
+        if (TabelaPizzas.getSelectedRow() >= 0) {
+            pizza.setId(pizzaTabela.getPizza(TabelaPizzas.getSelectedRow()).getId());
         }
 
         return pizza;
@@ -581,6 +597,7 @@ public class ManterPedido extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable TabelaPizzas;
     private javax.swing.JButton botaoAdicionar;
     private javax.swing.JButton botaoEditar;
     private javax.swing.JButton botaoRemover;
@@ -614,6 +631,5 @@ public class ManterPedido extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JButton linhaAtual;
-    private javax.swing.JTable tabelaPizzas;
     // End of variables declaration//GEN-END:variables
 }

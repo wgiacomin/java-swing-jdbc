@@ -17,7 +17,7 @@ public class PedidoDAO implements DAOInterface<Pedido> {
     private static final String QUERY_BUSCAR = "SELECT id, id_cliente FROM pedido WHERE id = ?;";
     private static final String QUERY_BUSCAR_TODOS = "SELECT id, id_cliente FROM pedido;";
     private static final String QUERY_BUSCAR_POR_CLIENTE = "SELECT id, id_cliente FROM pedido WHERE id_cliente = ?;";
-    private static final String QUERY_INSERIR = "INSERT INTO pedido(id_cliente, valor_total) VALUES (?, ?);";
+    private static final String QUERY_INSERIR = "INSERT INTO pedido(id_cliente, valor_total, id_estado) VALUES (?, ?, 1);";
     private static final String QUERY_REMOVER = "DELETE FROM pedido WHERE id = ?;";
     private static final String QUERY_EDITAR = "UPDATE pedido SET id_cliente = ? WHERE id = ?;";
 

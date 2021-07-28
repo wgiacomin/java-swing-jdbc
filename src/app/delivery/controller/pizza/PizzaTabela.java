@@ -76,12 +76,6 @@ public class PizzaTabela extends AbstractTableModel {
         return listaPizza.get(linha);
     }
 
-    public void editPizza(Pizza pizza, int linha) {
-        pizza.setId((int) this.getValueAt(linha, 0));
-        listaPizza.set(linha, pizza);
-        this.fireTableRowsUpdated(linha, linha);
-    }
-
     public boolean removePizza(int linha) {
         listaPizza.remove(linha);
         this.fireTableRowsDeleted(linha, linha);
