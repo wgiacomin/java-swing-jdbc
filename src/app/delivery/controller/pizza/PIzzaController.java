@@ -4,6 +4,7 @@ import app.delivery.controller.pedido.PedidoController;
 import app.delivery.model.beans.Pedido;
 import app.delivery.model.beans.Pizza;
 import app.delivery.model.dao.FormaDAO;
+import app.delivery.model.dao.PedidoDAO;
 import app.delivery.model.dao.PizzaDAO;
 import app.delivery.model.dao.PizzaSaborDAO;
 import app.delivery.model.dao.SaborDAO;
@@ -35,6 +36,9 @@ public class PizzaController {
             PizzaSaborDAO bd = new PizzaSaborDAO(factory.getConnection());
             bd.removerPizza(pizza.getId());
             bd.inserir(pizza);
+            
+            FormaDAO fd = new FormaDAO(factory.getConnection());
+            fd.editar(pizza.getFormato());
         } catch (DAOException e) {
             e.printStackTrace();
         }
@@ -42,14 +46,14 @@ public class PizzaController {
 
     public static Pedido adicionar(Pizza pizza, Pedido pedido) {
         try (ConnectionFactory factory = new ConnectionFactory()) {
-            if (pedido.getId() == -1){
+            if (pedido.getId() == -1) {
                 pedido.setTotal(pizza.calcPreco());
                 pedido = PedidoController.novoPedido(pedido);
             }
-            
+
             FormaDAO fd = new FormaDAO(factory.getConnection());
-            int i  = fd.inserir(pizza.getFormato());
-            
+            int i = fd.inserir(pizza.getFormato());
+
             pizza.setPedido(pedido);
             pizza.getFormato().setId(i);
             PizzaDAO qd = new PizzaDAO(factory.getConnection());
@@ -61,6 +65,19 @@ public class PizzaController {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static void remover(Pizza pizza) {
+        try (ConnectionFactory factory = new ConnectionFactory()) {
+            PizzaSaborDAO bd = new PizzaSaborDAO(factory.getConnection());
+            bd.removerPizza(pizza.getId());
+            FormaDAO fd = new FormaDAO(factory.getConnection());
+            fd.remover(pizza.getFormato());
+            PizzaDAO pb = new PizzaDAO(factory.getConnection());
+            pb.remover(pizza);
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
