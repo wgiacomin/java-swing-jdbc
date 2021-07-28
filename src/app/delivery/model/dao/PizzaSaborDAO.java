@@ -73,7 +73,7 @@ public class PizzaSaborDAO implements DAOInterface<PizzaSabor> {
                     + QUERY_BUSCAR_TODOS, e);
         }
     }
-
+    
     @Override
     public int inserir(PizzaSabor pizzaSabor) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(QUERY_INSERIR)) {
@@ -83,6 +83,21 @@ public class PizzaSaborDAO implements DAOInterface<PizzaSabor> {
         } catch (SQLException e) {
             throw new DAOException("Erro ao criar pizza/sabor: "
                     + QUERY_INSERIR, e);
+        }
+        return 0;
+    }
+    
+    public int inserir(Pizza pizza) throws DAOException {
+        ArrayList<Sabor> sabores = new ArrayList<>(pizza.getSabores());
+        for(int i = 0; i < sabores.size(); i++){
+            try (PreparedStatement st = con.prepareStatement(QUERY_INSERIR)) {
+                st.setInt(1, pizza.getId());
+                st.setInt(2, sabores.get(i).getId());
+                st.executeUpdate();
+            } catch (SQLException e) {
+                throw new DAOException("Erro ao criar pizza/sabor: "
+                        + QUERY_INSERIR, e);
+            }
         }
         return 0;
     }
