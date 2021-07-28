@@ -68,7 +68,7 @@ public class ManterPedido extends javax.swing.JInternalFrame {
         jLabel12 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tabelaPizzas = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
+        botaoAdicionar = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         linhaAtual = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -250,7 +250,12 @@ public class ManterPedido extends javax.swing.JInternalFrame {
         });
         jScrollPane3.setViewportView(tabelaPizzas);
 
-        jButton2.setText("Adicionar");
+        botaoAdicionar.setText("Adicionar");
+        botaoAdicionar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                botaoAdicionarMouseReleased(evt);
+            }
+        });
 
         jButton3.setText("Editar");
 
@@ -294,7 +299,7 @@ public class ManterPedido extends javax.swing.JInternalFrame {
                         .addComponent(boxPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(25, 25, 25)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(botaoAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(39, 39, 39)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -329,8 +334,8 @@ public class ManterPedido extends javax.swing.JInternalFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(jButton2)
-                            .addGap(54, 54, 54)
+                            .addComponent(botaoAdicionar)
+                            .addGap(48, 48, 48)
                             .addComponent(jLabel10))))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
@@ -397,8 +402,14 @@ public class ManterPedido extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_tabelaPizzasMousePressed
 
+    private void botaoAdicionarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoAdicionarMouseReleased
+        
+        
+    }//GEN-LAST:event_botaoAdicionarMouseReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botaoAdicionar;
     private javax.swing.JFormattedTextField boxArea;
     private javax.swing.JComboBox<String> boxCliente;
     private javax.swing.JComboBox<String> boxFormato;
@@ -412,7 +423,6 @@ public class ManterPedido extends javax.swing.JInternalFrame {
     private javax.swing.JCheckBox checkTamanho;
     private javax.swing.JFormattedTextField filterTelefone;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
