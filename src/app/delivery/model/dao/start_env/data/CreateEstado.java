@@ -4,7 +4,7 @@ import app.delivery.model.dao.utils.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.Statement;
 
-public class CreatePedido {
+public class CreateEstado {
 
     private static Statement query = null;
     private static Connection con = null;
@@ -14,19 +14,13 @@ public class CreatePedido {
             con = factory.getConnection();
             query = con.createStatement();
 
-            query.executeUpdate("INSERT INTO pedido (id_cliente, valor_total, id_estado) VALUES (1, 30, 1);");
+            query.executeUpdate("INSERT INTO estado (nome) VALUES ('Aberto');");
+            query.executeUpdate("INSERT INTO estado (nome) VALUES ('A caminho');");
+            query.executeUpdate("INSERT INTO estado (nome) VALUES ('Fechado');");
 
-            query.executeUpdate("INSERT INTO pedido (id_cliente, valor_total, id_estado) VALUES (2, 45, 1);");
-
-            query.executeUpdate("INSERT INTO pedido (id_cliente, valor_total, id_estado) VALUES (3, 50, 2);");
-
-            query.executeUpdate("INSERT INTO pedido (id_cliente, valor_total, id_estado) VALUES (4, 60, 1);");
-
-            query.executeUpdate("INSERT INTO pedido (id_cliente, valor_total, id_estado) VALUES (5, 70, 3);");
-
-            System.out.println("Pedidos criados com sucesso.");
+            System.out.println("Formas criadas com sucesso.");
         } catch (Exception e) {
-            System.out.println("Erro ao criar ao criar Pedidos.");
+            System.out.println("Erro ao criar ao criar Estados.");
             e.printStackTrace();
         } finally {
             if (con != null) {

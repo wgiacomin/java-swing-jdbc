@@ -6,6 +6,7 @@ import app.delivery.controller.pizza.PizzaController;
 import app.delivery.controller.pizza.PizzaTabela;
 import app.delivery.controller.pizza.SaborComboBox;
 import app.delivery.model.beans.Cliente;
+import app.delivery.model.beans.Pedido;
 import app.delivery.model.beans.Pizza;
 import app.delivery.model.beans.Sabor;
 import app.delivery.model.beans.formatos.Circulo;
@@ -13,6 +14,7 @@ import app.delivery.model.beans.formatos.FormatoAbstract;
 import app.delivery.model.beans.formatos.Formatos;
 import app.delivery.model.beans.formatos.Quadrado;
 import app.delivery.model.beans.formatos.Triangulo;
+import app.delivery.model.beans.formatos.TipoForma;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -144,6 +146,11 @@ public class ManterPedido extends javax.swing.JInternalFrame {
         jLabel3.setText("Formato:");
 
         boxTamanho.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        boxTamanho.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                boxTamanhoKeyReleased(evt);
+            }
+        });
 
         jLabel4.setText("cm");
 
@@ -160,6 +167,11 @@ public class ManterPedido extends javax.swing.JInternalFrame {
         jLabel7.setText("Sabor 2:");
 
         boxArea.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        boxArea.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                boxAreaKeyReleased(evt);
+            }
+        });
 
         jLabel8.setText("cm²");
 
@@ -382,16 +394,16 @@ public class ManterPedido extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_filterTelefoneKeyPressed
 
     private void checkTamanhoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkTamanhoItemStateChanged
-        if (checkTamanho.isSelected()) {
+        if (checkTamanho.isSelected() && checkArea.isSelected()) {
             checkArea.setSelected(false);
-            checkArea.setText("");
+            boxArea.setText("");
         }
     }//GEN-LAST:event_checkTamanhoItemStateChanged
 
     private void checkAreaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkAreaItemStateChanged
-        if (checkArea.isSelected()) {
+        if (checkArea.isSelected() && checkTamanho.isSelected()) {
             checkTamanho.setSelected(false);
-            checkTamanho.setText("");
+            boxTamanho.setText("");
         }
     }//GEN-LAST:event_checkAreaItemStateChanged
 
@@ -438,36 +450,39 @@ public class ManterPedido extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tabelaPizzasMousePressed
 
     private void botaoAdicionarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoAdicionarMouseReleased
+        if (!checkFields()) {
+            return;
+        }
+        Pizza pizza = this.getPizza();
+        Pedido pedido;
+        if (boxPedidos.getSelectedIndex() == 0) {
+            pedido = new Pedido();
+            pedido.setId(-1);
+        } else {
+            pedido = pedidoList.getPedido(boxPedidos.getSelectedIndex());
+        }
 
-
+        Cliente cliente = clienteComboBox.getCliente(boxCliente.getSelectedIndex());
+        pedido.setCliente(cliente);
+        pizza.setId(-1);
+        PizzaController.adicionar(pizza, pedido);
+        if (boxPedidos.getSelectedIndex() == 0) {
+            pedidoList.filterCliente(cliente);
+            boxPedidos.setSelectedIndex(pedidoList.getSize() - 1);
+            pizzaTabela.refreshTabela(pedidoList.getPedidoId(boxPedidos.getSelectedIndex()));
+            boxPreco.setText(pizzaTabela.getValorTotal());
+        } else {
+            pizzaTabela.refreshTabela(pedidoList.getPedidoId(boxPedidos.getSelectedIndex()));
+            boxPreco.setText(pizzaTabela.getValorTotal());
+        }
     }//GEN-LAST:event_botaoAdicionarMouseReleased
 
     private void botaoEditarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoEditarMouseReleased
+        if (!checkFields()) {
+            return;
+        }
         if (tabelaPizzas.getSelectedRow() >= 0) {
-            Pizza pizza = new Pizza();
-            FormatoAbstract forma;
-            if (boxFormato.getSelectedItem() == Formatos.CIRCULO) {
-                forma = new Circulo();
-            } else if (boxFormato.getSelectedItem() == Formatos.QUADRADO) {
-                forma = new Quadrado();
-            } else {
-                forma = new Triangulo();
-            }
-            
-            if (checkArea.isSelected()) {
-                forma.setArea(Double.parseDouble(boxArea.getText()));
-            } else {
-                forma.setDimension(Double.parseDouble(boxTamanho.getText()));
-            }
-            
-            List<Sabor> sabores = new ArrayList<>();
-            sabores.add(saborComboBox1.getSabor(boxSabor1.getSelectedIndex()));
-            if (checkSabor2.isSelected()){
-                sabores.add(saborComboBox2.getSabor(boxSabor2.getSelectedIndex()));
-            }
-            
-            pizza.setSabores(sabores);
-            pizza.setId(pizzaTabela.getPizza(tabelaPizzas.getSelectedRow()).getId());
+            Pizza pizza = getPizza();
             PizzaController.editar(pizza);
             pizzaTabela.refreshTabela(pedidoList.getPedidoId(boxPedidos.getSelectedIndex()));
             boxPreco.setText(pizzaTabela.getValorTotal());
@@ -478,18 +493,92 @@ public class ManterPedido extends javax.swing.JInternalFrame {
 
     private void botaoRemoverMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoRemoverMouseReleased
         if (tabelaPizzas.getSelectedRow() >= 0) {
-            
+
         } else {
             Dialog.main("Nenhuma linha na tabela selecionada!");
         }
     }//GEN-LAST:event_botaoRemoverMouseReleased
 
     private void boxSabor2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_boxSabor2ItemStateChanged
-        if (boxSabor2.getSelectedIndex() >= 0){
+        if (boxSabor2.getSelectedIndex() >= 0) {
             checkSabor2.setSelected(true);
-        } 
+        }
     }//GEN-LAST:event_boxSabor2ItemStateChanged
 
+    private void boxTamanhoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_boxTamanhoKeyReleased
+        if (checkTamanho.isSelected() && checkArea.isSelected()) {
+            checkArea.setSelected(false);
+            boxArea.setText("");
+        }
+    }//GEN-LAST:event_boxTamanhoKeyReleased
+
+    private void boxAreaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_boxAreaKeyReleased
+        if (checkTamanho.isSelected() && checkArea.isSelected()) {
+            checkArea.setSelected(false);
+            boxArea.setText("");
+        }
+    }//GEN-LAST:event_boxAreaKeyReleased
+
+    private Pizza getPizza() {
+        if (!checkFields()) {
+            return null;
+        }
+        Pizza pizza = new Pizza();
+        FormatoAbstract forma;
+        if (boxFormato.getSelectedItem() == Formatos.CIRCULO) {
+            forma = new Circulo();
+            forma.setId(TipoForma.CIRCULO);
+        } else if (boxFormato.getSelectedItem() == Formatos.QUADRADO) {
+            forma = new Quadrado();
+            forma.setId(TipoForma.QUADRADO);
+        } else {
+            forma = new Triangulo();
+            forma.setId(TipoForma.TRIANGULO);
+        }
+
+        if (checkArea.isSelected()) {
+            forma.setArea(Double.parseDouble(boxArea.getText()));
+        } else {
+            forma.setDimension(Double.parseDouble(boxTamanho.getText()));
+        }
+        pizza.setFormato(forma);
+        List<Sabor> sabores = new ArrayList<>();
+        sabores.add(saborComboBox1.getSabor(boxSabor1.getSelectedIndex()));
+        if (checkSabor2.isSelected()) {
+            sabores.add(saborComboBox2.getSabor(boxSabor2.getSelectedIndex()));
+        }
+
+        pizza.setSabores(sabores);
+        if (tabelaPizzas.getSelectedRow() >= 0) {
+            pizza.setId(pizzaTabela.getPizza(tabelaPizzas.getSelectedRow()).getId());
+        }
+
+        return pizza;
+    }
+
+    private boolean checkFields() {
+        if (boxArea.getText().isEmpty() && boxTamanho.getText().isEmpty()) {
+            Dialog.main("Nenhuma dimensão inserida.");
+            return false;
+        }
+
+        if (boxCliente.getSelectedIndex() < 0) {
+            Dialog.main("Cliente não selecionado.");
+            return false;
+        }
+
+        if (boxFormato.getSelectedIndex() < 0) {
+            Dialog.main("Formato não selecionado.");
+            return false;
+        }
+
+        if (boxSabor1.getSelectedIndex() < 0 || (boxSabor2.getSelectedIndex() < 0 && checkSabor2.isSelected())) {
+            Dialog.main("Sabores não selecionados corretamente.");
+            return false;
+        }
+
+        return true;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoAdicionar;

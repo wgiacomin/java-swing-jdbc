@@ -15,14 +15,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import app.delivery.model.dao.utils.TipoForma;
+import app.delivery.model.beans.formatos.TipoForma;
 
 public class PizzaDAO implements DAOInterface<Pizza> {
 
     private static final String QUERY_BUSCAR = "SELECT p.id, id_pedido, id_forma, medida, tipo_forma FROM pizza p INNER JOIN forma f ON p.id_forma = f.id WHERE p.id = ?;";
     private static final String QUERY_BUSCAR_TODOS = "SELECT p.id, id_pedido, id_forma, medida, tipo_forma FROM pizza p INNER JOIN forma f ON p.id_forma = f.id;";
     private static final String QUERY_BUSCAR_POR_PEDIDO = "SELECT p.id, id_pedido, id_forma, medida, tipo_forma FROM pizza p INNER JOIN forma f ON p.id_forma = f.id WHERE id_pedido = ?;";
-    private static final String QUERY_INSERIR = "INSERT INTO pizza(id_pedido, id_forma) VALUES (?);";
+    private static final String QUERY_INSERIR = "INSERT INTO pizza(id_pedido, id_forma) VALUES (?, ?);";
     private static final String QUERY_REMOVER = "DELETE FROM pizza WHERE id = ?;";
     private static final String QUERY_EDITAR = "UPDATE pizza SET id_pedido = ?, id_forma = ? WHERE id = ?;";
 
@@ -116,10 +116,11 @@ public class PizzaDAO implements DAOInterface<Pizza> {
     public int inserir(Pizza pizza) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(QUERY_INSERIR)) {
             st.setInt(1, pizza.getPedido().getId());
+            st.setInt(2, pizza.getFormato().getId());
             st.executeUpdate();
             ResultSet rs = con.createStatement().executeQuery("SELECT lastval();");
             if (rs.next()) {
-                return rs.getInt(1);
+                return rs.getInt("lastval");
             } else {
                 return -1;
             }

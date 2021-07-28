@@ -28,4 +28,11 @@ public class PedidoList extends DefaultListModel {
         }
         return -1;
     }
+    
+    public Pedido getPedido(int index) {
+        if (index > 0) {
+            return listaPedidos.get(index - 1);
+        }
+        return null;
+    }
 }

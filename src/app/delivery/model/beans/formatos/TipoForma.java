@@ -1,4 +1,4 @@
-package app.delivery.model.dao.utils;
+package app.delivery.model.beans.formatos;
 
 public final class TipoForma {
     public static final int CIRCULO = 1;

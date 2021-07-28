@@ -33,17 +33,14 @@ public class PedidoController {
         return null;
     }
 
-    public static void novoPedido(Pedido pedido, Pizza pizza) {
+    public static Pedido novoPedido(Pedido pedido) {
         try (ConnectionFactory factory = new ConnectionFactory()) {
             PedidoDAO bd = new PedidoDAO(factory.getConnection());
             pedido.setId(bd.inserir(pedido));
-            pizza.setPedido(pedido);
-            PizzaDAO pd = new PizzaDAO(factory.getConnection());
-            pizza.setId(pd.inserir(pizza));
-            
-
+            return pedido;
         } catch (DAOException e) {
             e.printStackTrace();
         }
+        return null;
     }
 }

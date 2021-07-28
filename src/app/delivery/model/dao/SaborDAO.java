@@ -15,7 +15,8 @@ import app.delivery.model.beans.TipoSabor;
 public class SaborDAO implements DAOInterface<Sabor> {
 
     private static final String QUERY_BUSCAR = "SELECT id, nome, id_tipo FROM sabor WHERE id = ?;";
-    private static final String QUERY_BUSCAR_TODOS = "SELECT id, nome, id_tipo FROM sabor ORDER BY nome ASC;";
+    private static final String QUERY_BUSCAR_TODOS = "SELECT s.id, s.nome, s.id_tipo as id_sabor, t.nome as tipo, t.custo FROM sabor s "
+            + " JOIN tipo_sabor t on t.id = s.id_tipo ORDER BY nome ASC;";
     private static final String QUERY_BUSCAR_POR_PIZZA = "SELECT s.id, s.nome, id_tipo, ts.nome as tipo, ts.custo, ts.id as id_sabor "
             + " FROM pizza_sabor ps\n"
             + "         INNER JOIN sabor s ON ps.id_sabor = s.id"
@@ -81,7 +82,7 @@ public class SaborDAO implements DAOInterface<Sabor> {
         try (PreparedStatement st = con.prepareStatement(QUERY_BUSCAR_TODOS)) {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                lista.add(extrairSabor(rs));
+                lista.add(extrairSaborComTipo(rs));
             }
             return lista;
         } catch (SQLException e) {

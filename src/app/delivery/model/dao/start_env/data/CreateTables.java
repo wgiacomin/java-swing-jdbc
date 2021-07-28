@@ -28,10 +28,15 @@ public class CreateTables {
                     + "    nome text,"
                     + "    sobrenome text,"
                     + "    telefone text)");
+            query.executeUpdate("CREATE TABLE estado ("
+                    + "    id serial PRIMARY KEY,"
+                    + "    nome varchar(50));");
             query.executeUpdate("CREATE TABLE pedido ("
                     + "    id serial PRIMARY KEY,"
                     + "    id_cliente integer,"
-                    + "    valor_total money, "
+                    + "    valor_total double precision, "
+                    + "    id_estado integer,"
+                    + "    CONSTRAINT id_estado_fkey FOREIGN KEY (id_estado) REFERENCES estado(id), "
                     + "    CONSTRAINT pedido_id_cliente_fkey FOREIGN KEY (id_cliente)\n"
                     + "        REFERENCES cliente (id) ON DELETE CASCADE)");
             query.executeUpdate("CREATE TABLE forma ("

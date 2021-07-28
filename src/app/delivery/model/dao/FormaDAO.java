@@ -5,7 +5,7 @@ import app.delivery.model.beans.formatos.Circulo;
 import app.delivery.model.beans.formatos.Quadrado;
 import app.delivery.model.beans.formatos.Triangulo;
 import app.delivery.model.dao.utils.DAOInterface;
-import app.delivery.model.dao.utils.TipoForma;
+import app.delivery.model.beans.formatos.TipoForma;
 import app.exceptions.DAOException;
 
 import java.sql.Connection;
@@ -20,15 +20,17 @@ public class FormaDAO implements DAOInterface<FormatoAbstract> {
 
     private static final String QUERY_BUSCAR = "SELECT id, medida, tipo_forma FROM forma WHERE id = ?;";
     private static final String QUERY_BUSCAR_TODOS = "SELECT id, medida, tipo_forma FROM forma;";
-    private static final String QUERY_INSERIR = "INSERT INTO forma(medida, tipo_forma) VALUES (?, ?, ?);";
+    private static final String QUERY_INSERIR = "INSERT INTO forma(medida, tipo_forma) VALUES (?, ?);";
     private static final String QUERY_REMOVER = "DELETE FROM forma WHERE id = ?;";
     private static final String QUERY_EDITAR = "UPDATE forma SET medida = ?, tipo_forma = ? WHERE id = ?;";
 
     private Connection con = null;
 
-    public FormaDAO() throws DAOException {
-        ConnectionFactory factory = new ConnectionFactory();
-        con = factory.getConnection();
+    public FormaDAO(Connection con) throws DAOException {
+        if (con == null) {
+            throw new DAOException("Conexão nula ao criar.");
+        }
+        this.con = con;
     }
 
     private FormatoAbstract extrairForma(ResultSet rs) throws SQLException, DAOException {
@@ -119,11 +121,16 @@ public class FormaDAO implements DAOInterface<FormatoAbstract> {
                         + QUERY_BUSCAR_TODOS);
             }
             st.executeUpdate();
+            ResultSet rs = con.createStatement().executeQuery("SELECT lastval();");
+            if (rs.next()) {
+                return rs.getInt("lastval");
+            } else {
+                return -1;
+            }
         } catch (SQLException e) {
             throw new DAOException("Erro ao criar forma: "
                     + QUERY_INSERIR, e);
         }
-        return 0;
     }
 
     @Override

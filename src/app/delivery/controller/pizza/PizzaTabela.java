@@ -1,5 +1,7 @@
 package app.delivery.controller.pizza;
 
+import app.delivery.model.beans.Cliente;
+import app.delivery.model.beans.Pedido;
 import app.delivery.model.beans.Pizza;
 import app.delivery.model.beans.formatos.Circulo;
 import app.delivery.model.beans.formatos.Formatos;
@@ -72,11 +74,6 @@ public class PizzaTabela extends AbstractTableModel {
 
     public Pizza getPizza(int linha) {
         return listaPizza.get(linha);
-    }
-
-    public void addPizza(Pizza pizza) {
-        listaPizza.add(pizza);
-        this.fireTableRowsInserted(this.listaPizza.size() - 1, this.listaPizza.size() - 1);
     }
 
     public void editPizza(Pizza pizza, int linha) {
