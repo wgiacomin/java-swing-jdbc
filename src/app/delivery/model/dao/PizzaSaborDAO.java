@@ -19,6 +19,7 @@ public class PizzaSaborDAO implements DAOInterface<PizzaSabor> {
     private static final String QUERY_BUSCAR_TODOS = "SELECT id, id_pizza, id_sabor FROM pizza_sabor ORDER BY nome ASC;";
     private static final String QUERY_INSERIR = "INSERT INTO pizza_sabor(id_pizza, id_sabor) VALUES (?, ?);";
     private static final String QUERY_REMOVER = "DELETE FROM pizza_sabor WHERE id = ?;";
+    private static final String QUERY_REMOVER_PIZZA = "DELETE FROM pizza_sabor WHERE id_pizza = ?;";
     private static final String QUERY_EDITAR = "UPDATE pizza_sabor SET id_pizza = ?, id_sabor = ? WHERE id = ?;";
 
     private Connection con = null;
@@ -73,7 +74,7 @@ public class PizzaSaborDAO implements DAOInterface<PizzaSabor> {
                     + QUERY_BUSCAR_TODOS, e);
         }
     }
-    
+
     @Override
     public int inserir(PizzaSabor pizzaSabor) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(QUERY_INSERIR)) {
@@ -86,10 +87,10 @@ public class PizzaSaborDAO implements DAOInterface<PizzaSabor> {
         }
         return 0;
     }
-    
+
     public int inserir(Pizza pizza) throws DAOException {
         ArrayList<Sabor> sabores = new ArrayList<>(pizza.getSabores());
-        for(int i = 0; i < sabores.size(); i++){
+        for (int i = 0; i < sabores.size(); i++) {
             try (PreparedStatement st = con.prepareStatement(QUERY_INSERIR)) {
                 st.setInt(1, pizza.getId());
                 st.setInt(2, sabores.get(i).getId());
@@ -100,6 +101,16 @@ public class PizzaSaborDAO implements DAOInterface<PizzaSabor> {
             }
         }
         return 0;
+    }
+
+    public void removerPizza(int id) throws DAOException {
+        try (PreparedStatement st = con.prepareStatement(QUERY_REMOVER_PIZZA)) {
+            st.setInt(1, id);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Erro ao deletar pizza/sabor: "
+                    + QUERY_REMOVER_PIZZA, e);
+        }
     }
 
     @Override

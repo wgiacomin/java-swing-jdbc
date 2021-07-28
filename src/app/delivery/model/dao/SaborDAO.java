@@ -16,7 +16,7 @@ public class SaborDAO implements DAOInterface<Sabor> {
 
     private static final String QUERY_BUSCAR = "SELECT id, nome, id_tipo FROM sabor WHERE id = ?;";
     private static final String QUERY_BUSCAR_TODOS = "SELECT id, nome, id_tipo FROM sabor ORDER BY nome ASC;";
-    private static final String QUERY_BUSCAR_POR_PIZZA = "SELECT s.id, s.nome, id_tipo, ts.nome as tipo, ts.custo"
+    private static final String QUERY_BUSCAR_POR_PIZZA = "SELECT s.id, s.nome, id_tipo, ts.nome as tipo, ts.custo, ts.id as id_sabor "
             + " FROM pizza_sabor ps\n"
             + "         INNER JOIN sabor s ON ps.id_sabor = s.id"
             + "         INNER JOIN pizza p ON ps.id_pizza = p.id"
@@ -54,6 +54,7 @@ public class SaborDAO implements DAOInterface<Sabor> {
         sabor.setNome(rs.getString("nome"));
         tipo.setNome(rs.getString("tipo"));
         tipo.setCusto(rs.getDouble("custo"));
+        tipo.setId(rs.getInt("id_sabor"));
         sabor.setTipo(tipo);
         return sabor;
     }

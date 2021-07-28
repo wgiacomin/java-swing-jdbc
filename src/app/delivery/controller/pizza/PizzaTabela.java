@@ -60,9 +60,9 @@ public class PizzaTabela extends AbstractTableModel {
                 }
                 return null;
             case 2:
-                return String.format(Locale.GERMANY, "%.2f", pizza.getFormato().getDimension());
+                return (int) pizza.getFormato().getDimension();
             case 3:
-                return String.format(Locale.GERMANY, "%.2f", pizza.getFormato().area());
+                return (int) pizza.getFormato().area();
             case 4:
                 return format.format(pizza.calcPreco());
             default:
