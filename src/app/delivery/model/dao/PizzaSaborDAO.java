@@ -15,11 +15,11 @@ import java.util.List;
 
 public class PizzaSaborDAO implements DAOInterface<PizzaSabor> {
 
-    private static final String QUERY_BUSCAR = "SELECT id, id_pizza, id_sabor FROM sabor WHERE id = ?;";
-    private static final String QUERY_BUSCAR_TODOS = "SELECT id, id_pizza, id_sabor FROM sabor ORDER BY nome ASC;";
-    private static final String QUERY_INSERIR = "INSERT INTO sabor(id_pizza, id_sabor) VALUES (?, ?);";
-    private static final String QUERY_REMOVER = "DELETE FROM sabor WHERE id = ?;";
-    private static final String QUERY_EDITAR = "UPDATE sabor SET id_pizza = ?, id_sabor = ? WHERE id = ?;";
+    private static final String QUERY_BUSCAR = "SELECT id, id_pizza, id_sabor FROM pizza_sabor WHERE id = ?;";
+    private static final String QUERY_BUSCAR_TODOS = "SELECT id, id_pizza, id_sabor FROM pizza_sabor ORDER BY nome ASC;";
+    private static final String QUERY_INSERIR = "INSERT INTO pizza_sabor(id_pizza, id_sabor) VALUES (?, ?);";
+    private static final String QUERY_REMOVER = "DELETE FROM pizza_sabor WHERE id = ?;";
+    private static final String QUERY_EDITAR = "UPDATE pizza_sabor SET id_pizza = ?, id_sabor = ? WHERE id = ?;";
 
     private Connection con = null;
 
