@@ -3,6 +3,7 @@ package app.delivery.model.beans;
 public class Pedido {
     private int id;
     private Cliente cliente;
+    private double total;
 
     public Pedido() {
     }
@@ -22,4 +23,13 @@ public class Pedido {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+    
 }

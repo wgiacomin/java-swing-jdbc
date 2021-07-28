@@ -23,46 +23,47 @@ public class CreateTables {
             query.executeUpdate("GRANT ALL ON SCHEMA public TO public;");
 
             //Creating New Tables
-            query.executeUpdate("CREATE TABLE cliente (" +
-                    "    id serial PRIMARY KEY," +
-                    "    nome text," +
-                    "    sobrenome text," +
-                    "    telefone text)");
-            query.executeUpdate("CREATE TABLE pedido (" +
-                    "    id serial PRIMARY KEY," +
-                    "    id_cliente integer," +
-                    "    CONSTRAINT pedido_id_cliente_fkey FOREIGN KEY (id_cliente)\n" +
-                    "        REFERENCES cliente (id) ON DELETE CASCADE)");
-            query.executeUpdate("CREATE TABLE forma (" +
-                    "    id serial PRIMARY KEY," +
-                    "    medida double precision," +
-                    "    tipo_forma integer)");
-            query.executeUpdate("CREATE TABLE pizza (" +
-                    "    id serial PRIMARY KEY," +
-                    "    id_pedido integer," +
-                    "    id_forma integer," +
-                    "    CONSTRAINT pizza_id_pedido_fkey FOREIGN KEY (id_pedido)" +
-                    "        REFERENCES pedido (id) ON DELETE CASCADE, " +
-                    "    CONSTRAINT pizza_id_forma_fkey FOREIGN KEY (id_forma)" +
-                    "        REFERENCES forma (id) ON DELETE CASCADE)");
-            query.executeUpdate("CREATE TABLE tipo_sabor (" +
-                    "    id serial PRIMARY KEY," +
-                    "    nome text," +
-                    "    custo double precision)");
-            query.executeUpdate("CREATE TABLE sabor (" +
-                    "    id serial PRIMARY KEY," +
-                    "    nome text," +
-                    "    id_tipo integer," +
-                    "    CONSTRAINT sabor_id_tipo_fkey FOREIGN KEY (id_tipo)" +
-                    "        REFERENCES tipo_sabor (id) )");
-            query.executeUpdate("CREATE TABLE pizza_sabor (" +
-                    "    id serial PRIMARY KEY," +
-                    "    id_pizza integer," +
-                    "    id_sabor integer," +
-                    "    CONSTRAINT pizza_sabor_id_pizza_fkey FOREIGN KEY (id_pizza)" +
-                    "        REFERENCES pizza (id) ON DELETE CASCADE," +
-                    "    CONSTRAINT pizza_sabor_id_sabor_fkey FOREIGN KEY (id_sabor)" +
-                    "        REFERENCES sabor (id) )");
+            query.executeUpdate("CREATE TABLE cliente ("
+                    + "    id serial PRIMARY KEY,"
+                    + "    nome text,"
+                    + "    sobrenome text,"
+                    + "    telefone text)");
+            query.executeUpdate("CREATE TABLE pedido ("
+                    + "    id serial PRIMARY KEY,"
+                    + "    id_cliente integer,"
+                    + "    valor_total money, "
+                    + "    CONSTRAINT pedido_id_cliente_fkey FOREIGN KEY (id_cliente)\n"
+                    + "        REFERENCES cliente (id) ON DELETE CASCADE)");
+            query.executeUpdate("CREATE TABLE forma ("
+                    + "    id serial PRIMARY KEY,"
+                    + "    medida double precision,"
+                    + "    tipo_forma integer)");
+            query.executeUpdate("CREATE TABLE pizza ("
+                    + "    id serial PRIMARY KEY,"
+                    + "    id_pedido integer,"
+                    + "    id_forma integer,"
+                    + "    CONSTRAINT pizza_id_pedido_fkey FOREIGN KEY (id_pedido)"
+                    + "        REFERENCES pedido (id) ON DELETE CASCADE, "
+                    + "    CONSTRAINT pizza_id_forma_fkey FOREIGN KEY (id_forma)"
+                    + "        REFERENCES forma (id) ON DELETE CASCADE)");
+            query.executeUpdate("CREATE TABLE tipo_sabor ("
+                    + "    id serial PRIMARY KEY,"
+                    + "    nome text,"
+                    + "    custo double precision)");
+            query.executeUpdate("CREATE TABLE sabor ("
+                    + "    id serial PRIMARY KEY,"
+                    + "    nome text,"
+                    + "    id_tipo integer,"
+                    + "    CONSTRAINT sabor_id_tipo_fkey FOREIGN KEY (id_tipo)"
+                    + "        REFERENCES tipo_sabor (id) )");
+            query.executeUpdate("CREATE TABLE pizza_sabor ("
+                    + "    id serial PRIMARY KEY,"
+                    + "    id_pizza integer,"
+                    + "    id_sabor integer,"
+                    + "    CONSTRAINT pizza_sabor_id_pizza_fkey FOREIGN KEY (id_pizza)"
+                    + "        REFERENCES pizza (id) ON DELETE CASCADE,"
+                    + "    CONSTRAINT pizza_sabor_id_sabor_fkey FOREIGN KEY (id_sabor)"
+                    + "        REFERENCES sabor (id) )");
 
             System.out.println("Tabelas criadas com sucesso.");
         } catch (Exception e) {

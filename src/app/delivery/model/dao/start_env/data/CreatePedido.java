@@ -14,15 +14,15 @@ public class CreatePedido {
             con = factory.getConnection();
             query = con.createStatement();
 
-            query.executeUpdate("INSERT INTO pedido (id_cliente) VALUES (1);");
+            query.executeUpdate("INSERT INTO pedido (id_cliente, valor_total) VALUES (1, 30);");
 
-            query.executeUpdate("INSERT INTO pedido (id_cliente) VALUES (2);");
+            query.executeUpdate("INSERT INTO pedido (id_cliente, valor_total) VALUES (2, 45);");
 
-            query.executeUpdate("INSERT INTO pedido (id_cliente) VALUES (3);");
+            query.executeUpdate("INSERT INTO pedido (id_cliente, valor_total) VALUES (3, 50);");
 
-            query.executeUpdate("INSERT INTO pedido (id_cliente) VALUES (4);");
+            query.executeUpdate("INSERT INTO pedido (id_cliente, valor_total) VALUES (4, 60);");
 
-            query.executeUpdate("INSERT INTO pedido (id_cliente) VALUES (5);");
+            query.executeUpdate("INSERT INTO pedido (id_cliente, valor_total) VALUES (5, 70);");
 
             System.out.println("Pedidos criados com sucesso.");
         } catch (Exception e) {

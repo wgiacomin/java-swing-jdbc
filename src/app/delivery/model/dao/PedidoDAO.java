@@ -17,7 +17,7 @@ public class PedidoDAO implements DAOInterface<Pedido> {
     private static final String QUERY_BUSCAR = "SELECT id, id_cliente FROM pedido WHERE id = ?;";
     private static final String QUERY_BUSCAR_TODOS = "SELECT id, id_cliente FROM pedido;";
     private static final String QUERY_BUSCAR_POR_CLIENTE = "SELECT id, id_cliente FROM pedido WHERE id_cliente = ?;";
-    private static final String QUERY_INSERIR = "INSERT INTO pedido(id_cliente) VALUES (?);";
+    private static final String QUERY_INSERIR = "INSERT INTO pedido(id_cliente, valor_total) VALUES (?, ?);";
     private static final String QUERY_REMOVER = "DELETE FROM pedido WHERE id = ?;";
     private static final String QUERY_EDITAR = "UPDATE pedido SET id_cliente = ? WHERE id = ?;";
 
@@ -86,15 +86,20 @@ public class PedidoDAO implements DAOInterface<Pedido> {
         }
     }
 
-    @Override
-    public void inserir(Pedido pedido) throws DAOException {
+    public void inserirCompleto(Pedido pedido, double valor) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(QUERY_INSERIR)) {
             st.setInt(1, pedido.getCliente().getId());
+            st.setDouble(2, valor);
             st.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Erro ao criar pedido: "
                     + QUERY_INSERIR, e);
         }
+    }
+
+    @Override
+    public void inserir(Pedido pedido) throws DAOException {
+        throw new DAOException("Erro de implementação");
     }
 
     @Override

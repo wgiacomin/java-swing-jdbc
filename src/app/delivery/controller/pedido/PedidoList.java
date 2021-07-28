@@ -21,4 +21,11 @@ public class PedidoList extends DefaultListModel {
             this.addElement(String.valueOf(e.getId()));
         });
     }
+
+    public int getPedidoId(int index) {
+        if (index > 0) {
+            return listaPedidos.get(index - 1).getId();
+        }
+        return -1;
+    }
 }

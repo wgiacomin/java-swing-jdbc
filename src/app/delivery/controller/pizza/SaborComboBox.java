@@ -16,4 +16,16 @@ public class SaborComboBox extends DefaultComboBoxModel<String> {
         this.setSelectedItem(null);
     }
 
+    public void selecionarSabor(Sabor sabor) {
+        if (sabor == null) {
+            this.setSelectedItem(null);
+            return;
+        }
+        for (int i = 0; i < this.getSize(); i++){
+            if (this.getElementAt(i).equals(sabor.getNome())){
+                this.setSelectedItem(this.getElementAt(i));
+                return;
+            }
+        }
+    }
 }

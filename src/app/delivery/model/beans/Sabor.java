@@ -3,7 +3,7 @@ package app.delivery.model.beans;
 public class Sabor {
     private int id;
     private String nome;
-    private int idTipo;
+    private TipoSabor tipo;
 
     public Sabor() {
     }
@@ -24,11 +24,12 @@ public class Sabor {
         this.nome = nome;
     }
 
-    public int getIdTipo() {
-        return idTipo;
+    public TipoSabor getTipo() {
+        return tipo;
     }
 
-    public void setIdTipo(int idTipo) {
-        this.idTipo = idTipo;
+    public void setTipo(TipoSabor tipo) {
+        this.tipo = tipo;
     }
+
 }
