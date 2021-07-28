@@ -79,13 +79,15 @@ public class VisualizarPedido extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoAlterarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoAlterarMousePressed
-       if (TabelaPedidos.getSelectedRow() >= 0){
+       if (TabelaPedidos.getSelectedRow() >= 0 && boxEstados.getSelectedIndex() >= 0){
            int linha = TabelaPedidos.getSelectedRow();
            Pedido pedido = pedidosTabela.getPedido(linha);
            pedido.setEstado(estadobox.getEstado(boxEstados.getSelectedIndex()));
            PedidoController.editarStatus(pedido);
            pedidosTabela.refreshTabela();
            TabelaPedidos.setRowSelectionInterval(linha, linha);
+       } else {
+           Dialog.main("Linha não selecionada");
        }
     }//GEN-LAST:event_botaoAlterarMousePressed
 
