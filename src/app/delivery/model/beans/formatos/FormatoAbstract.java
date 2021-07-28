@@ -16,6 +16,8 @@ public abstract class FormatoAbstract {
         this.dimension = dimension;
     }
     
+    public abstract void setArea(double area);
+    
     public double getDimension(){
         return this.dimension;
     }

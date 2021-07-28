@@ -6,10 +6,13 @@ import app.delivery.controller.pizza.PizzaTabela;
 import app.delivery.controller.pizza.SaborComboBox;
 import app.delivery.model.beans.Cliente;
 import app.delivery.model.beans.Pizza;
+import app.delivery.model.beans.Sabor;
 import app.delivery.model.beans.formatos.Circulo;
+import app.delivery.model.beans.formatos.FormatoAbstract;
 import app.delivery.model.beans.formatos.Formatos;
 import app.delivery.model.beans.formatos.Quadrado;
 import app.delivery.model.beans.formatos.Triangulo;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 
@@ -69,11 +72,11 @@ public class ManterPedido extends javax.swing.JInternalFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         tabelaPizzas = new javax.swing.JTable();
         botaoAdicionar = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        botaoEditar = new javax.swing.JButton();
         linhaAtual = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         boxPedidos = new javax.swing.JList<>();
-        jButton1 = new javax.swing.JButton();
+        botaoRemover = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -214,20 +217,22 @@ public class ManterPedido extends javax.swing.JInternalFrame {
                         .addComponent(jLabel5))
                     .addComponent(checkTamanho))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(boxArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel9)
-                    .addComponent(checkArea))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(checkArea, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(boxArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel8)
+                        .addComponent(jLabel9)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(boxSabor1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(boxSabor2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7)
-                    .addComponent(checkSabor2))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(checkSabor2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(boxSabor2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel7)))
                 .addContainerGap(38, Short.MAX_VALUE))
         );
 
@@ -257,7 +262,12 @@ public class ManterPedido extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton3.setText("Editar");
+        botaoEditar.setText("Editar");
+        botaoEditar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                botaoEditarMouseReleased(evt);
+            }
+        });
 
         linhaAtual.setFocusable(false);
 
@@ -269,7 +279,12 @@ public class ManterPedido extends javax.swing.JInternalFrame {
         });
         jScrollPane2.setViewportView(boxPedidos);
 
-        jButton1.setText("Remover");
+        botaoRemover.setText("Remover");
+        botaoRemover.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                botaoRemoverMouseReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -302,8 +317,8 @@ public class ManterPedido extends javax.swing.JInternalFrame {
                         .addComponent(botaoAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(39, 39, 39)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(botaoRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botaoEditar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(40, 40, 40))
         );
         layout.setVerticalGroup(
@@ -314,9 +329,9 @@ public class ManterPedido extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)
-                        .addComponent(jButton3)
+                        .addComponent(botaoEditar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1)
+                        .addComponent(botaoRemover)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(boxPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -403,13 +418,53 @@ public class ManterPedido extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tabelaPizzasMousePressed
 
     private void botaoAdicionarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoAdicionarMouseReleased
-        
-        
+
+
     }//GEN-LAST:event_botaoAdicionarMouseReleased
+
+    private void botaoEditarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoEditarMouseReleased
+        if (tabelaPizzas.getSelectedRow() >= 0) {
+            Pizza pizza = new Pizza();
+            FormatoAbstract forma;
+            if (boxFormato.getSelectedItem() == Formatos.CIRCULO) {
+                forma = new Circulo();
+            } else if (boxFormato.getSelectedItem() == Formatos.QUADRADO) {
+                forma = new Quadrado();
+            } else {
+                forma = new Triangulo();
+            }
+            
+            if (checkArea.isSelected()) {
+                forma.setArea(Double.parseDouble(boxArea.getText()));
+            } else {
+                forma.setDimension(Double.parseDouble(boxTamanho.getText()));
+            }
+            
+            List<Sabor> sabores = new ArrayList<>();
+            sabores.add(saborComboBox1.getSabor(boxSabor1.getSelectedIndex()));
+            if (checkSabor2.isSelected()){
+                sabores.add(saborComboBox2.getSabor(boxSabor2.getSelectedIndex()));
+            }
+            
+            pizza.setSabores(sabores);
+        } else {
+            Dialog.main("Nenhuma linha na tabela selecionada!");
+        }
+    }//GEN-LAST:event_botaoEditarMouseReleased
+
+    private void botaoRemoverMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoRemoverMouseReleased
+        if (tabelaPizzas.getSelectedRow() >= 0) {
+            
+        } else {
+            Dialog.main("Nenhuma linha na tabela selecionada!");
+        }
+    }//GEN-LAST:event_botaoRemoverMouseReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoAdicionar;
+    private javax.swing.JButton botaoEditar;
+    private javax.swing.JButton botaoRemover;
     private javax.swing.JFormattedTextField boxArea;
     private javax.swing.JComboBox<String> boxCliente;
     private javax.swing.JComboBox<String> boxFormato;
@@ -422,8 +477,6 @@ public class ManterPedido extends javax.swing.JInternalFrame {
     private javax.swing.JCheckBox checkSabor2;
     private javax.swing.JCheckBox checkTamanho;
     private javax.swing.JFormattedTextField filterTelefone;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

@@ -28,4 +28,11 @@ public class SaborComboBox extends DefaultComboBoxModel<String> {
             }
         }
     }
+    
+    public Sabor getSabor(int index){
+        if (index >= 0){
+            return listaSabores.get(index);
+        }
+        return null;
+    }
 }
