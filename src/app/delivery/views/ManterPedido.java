@@ -1,6 +1,7 @@
 package app.delivery.views;
 
 import app.delivery.controller.cliente.ClienteComboBox;
+import app.delivery.controller.pedido.PedidoController;
 import app.delivery.controller.pedido.PedidoList;
 import app.delivery.controller.pizza.PizzaController;
 import app.delivery.controller.pizza.PizzaTabela;
@@ -462,7 +463,7 @@ public class ManterPedido extends javax.swing.JInternalFrame {
         } else {
             pedido = pedidoList.getPedido(boxPedidos.getSelectedIndex());
         }
-
+        pedido.setTotal(pizzaTabela.getValorTotalNumeric());
         Cliente cliente = clienteComboBox.getCliente(boxCliente.getSelectedIndex());
         pedido.setCliente(cliente);
         pizza.setId(-1);
@@ -484,8 +485,15 @@ public class ManterPedido extends javax.swing.JInternalFrame {
         }
         if (TabelaPizzas.getSelectedRow() >= 0) {
             Pizza pizza = getPizza();
+            pizza.getFormato().setId(pizzaTabela.getPizza(TabelaPizzas.getSelectedRow()).getFormato().getId());
             PizzaController.editar(pizza);
+            
+            Pedido pedido = new Pedido();
+            pedido.setId(pedidoList.getPedidoId(boxPedidos.getSelectedIndex()));
+            
             pizzaTabela.refreshTabela(pedidoList.getPedidoId(boxPedidos.getSelectedIndex()));
+            pedido.setTotal(pizzaTabela.getValorTotalNumeric());
+            PedidoController.editar(pedido);
             boxPreco.setText(pizzaTabela.getValorTotal());
         } else {
             Dialog.main("Nenhuma linha na tabela selecionada!");
@@ -543,13 +551,10 @@ public class ManterPedido extends javax.swing.JInternalFrame {
         FormatoAbstract forma;
         if (boxFormato.getSelectedItem() == Formatos.CIRCULO) {
             forma = new Circulo();
-            forma.setId(TipoForma.CIRCULO);
         } else if (boxFormato.getSelectedItem() == Formatos.QUADRADO) {
             forma = new Quadrado();
-            forma.setId(TipoForma.QUADRADO);
         } else {
             forma = new Triangulo();
-            forma.setId(TipoForma.TRIANGULO);
         }
 
         if (checkArea.isSelected()) {

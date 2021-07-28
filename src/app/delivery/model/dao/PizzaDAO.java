@@ -61,7 +61,7 @@ public class PizzaDAO implements DAOInterface<Pizza> {
                 throw new DAOException("Erro buscando categoria de forma");
         }
         formato.setId(rs.getInt("id_forma"));
-
+        pizza.setPedido(pedido);
         pizza.setFormato(formato);
         return pizza;
     }

@@ -19,7 +19,8 @@ public class PedidoDAO implements DAOInterface<Pedido> {
     private static final String QUERY_BUSCAR_POR_CLIENTE = "SELECT id, id_cliente FROM pedido WHERE id_cliente = ?;";
     private static final String QUERY_INSERIR = "INSERT INTO pedido(id_cliente, valor_total, id_estado) VALUES (?, ?, 1);";
     private static final String QUERY_REMOVER = "DELETE FROM pedido WHERE id = ?;";
-    private static final String QUERY_EDITAR = "UPDATE pedido SET id_cliente = ? WHERE id = ?;";
+    private static final String QUERY_EDITAR = "UPDATE pedido SET valor_total = ? WHERE id = ?;";
+    private static final String QUERY_EDITAR_STATUS = "UPDATE pedido SET valor_total = ?, id_estado = ? WHERE id = ?;";
 
     private Connection con = null;
 
@@ -86,6 +87,7 @@ public class PedidoDAO implements DAOInterface<Pedido> {
     }
 
  
+    @Override
     public int inserir(Pedido pedido) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(QUERY_INSERIR)) {
             st.setInt(1, pedido.getCliente().getId());
@@ -117,7 +119,7 @@ public class PedidoDAO implements DAOInterface<Pedido> {
     @Override
     public void editar(Pedido pedido) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(QUERY_EDITAR)) {
-            st.setInt(1, pedido.getCliente().getId());
+            st.setDouble(1, pedido.getTotal());
             st.setInt(2, pedido.getId());
             st.executeUpdate();
         } catch (SQLException e) {

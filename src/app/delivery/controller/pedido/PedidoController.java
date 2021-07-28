@@ -33,6 +33,15 @@ public class PedidoController {
         return null;
     }
 
+    public static void editar(Pedido pedido) {
+        try (ConnectionFactory factory = new ConnectionFactory()) {
+            PedidoDAO bd = new PedidoDAO(factory.getConnection());
+            bd.editar(pedido);
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static Pedido novoPedido(Pedido pedido) {
         try (ConnectionFactory factory = new ConnectionFactory()) {
             PedidoDAO bd = new PedidoDAO(factory.getConnection());
