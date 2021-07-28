@@ -29,6 +29,8 @@ public class main extends javax.swing.JFrame {
         menuCadastrar = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         manterPedido = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        precosCm = new javax.swing.JMenuItem();
 
         jInternalFrame1.setVisible(true);
 
@@ -81,6 +83,18 @@ public class main extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
+        jMenu3.setText("Pizzas");
+
+        precosCm.setText("Preços por cm²");
+        precosCm.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                precosCmMouseReleased(evt);
+            }
+        });
+        jMenu3.add(precosCm);
+
+        jMenuBar1.add(jMenu3);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -116,6 +130,16 @@ public class main extends javax.swing.JFrame {
                 (desktopSize.height - jInternalFrameSize.height - 100) / 2);
         manterPedido.setVisible(true);
     }//GEN-LAST:event_manterPedidoMouseReleased
+
+    private void precosCmMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_precosCmMouseReleased
+        AtualizarPreco atualizarPreco = new AtualizarPreco();
+        this.mainScreen.add(atualizarPreco);
+        Dimension desktopSize = this.getSize();
+        Dimension jInternalFrameSize = atualizarPreco.getSize();
+        atualizarPreco.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                (desktopSize.height - jInternalFrameSize.height - 100) / 2);
+        atualizarPreco.setVisible(true);
+    }//GEN-LAST:event_precosCmMouseReleased
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -153,9 +177,11 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JDesktopPane mainScreen;
     private javax.swing.JMenuItem manterPedido;
     private javax.swing.JMenuItem menuCadastrar;
+    private javax.swing.JMenuItem precosCm;
     // End of variables declaration//GEN-END:variables
 }

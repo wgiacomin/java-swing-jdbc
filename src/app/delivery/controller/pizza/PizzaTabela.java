@@ -1,7 +1,5 @@
 package app.delivery.controller.pizza;
 
-import app.delivery.model.beans.Cliente;
-import app.delivery.model.beans.Pedido;
 import app.delivery.model.beans.Pizza;
 import app.delivery.model.beans.formatos.Circulo;
 import app.delivery.model.beans.formatos.Formatos;
@@ -10,7 +8,6 @@ import app.delivery.model.beans.formatos.Triangulo;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import javax.swing.table.AbstractTableModel;
 
 public class PizzaTabela extends AbstractTableModel {

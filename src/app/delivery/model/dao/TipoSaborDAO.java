@@ -17,7 +17,7 @@ public class TipoSaborDAO implements DAOInterface<TipoSabor> {
     private static final String QUERY_BUSCAR_TODOS = "SELECT id, nome, custo FROM tipo_sabor ORDER BY nome ASC;";
     private static final String QUERY_INSERIR = "INSERT INTO tipo_sabor(nome, custo) VALUES (?, ?);";
     private static final String QUERY_REMOVER = "DELETE FROM tipo_sabor WHERE id = ?;";
-    private static final String QUERY_EDITAR = "UPDATE tipo_sabor SET nome = ?, custo = ? WHERE id = ?;";
+    private static final String QUERY_EDITAR = "UPDATE tipo_sabor SET custo = ? WHERE id = ?;";
 
     private Connection con = null;
 
@@ -95,9 +95,8 @@ public class TipoSaborDAO implements DAOInterface<TipoSabor> {
     @Override
     public void editar(TipoSabor tipoSabor) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(QUERY_EDITAR)) {
-            st.setString(1, tipoSabor.getNome());
-            st.setDouble(2, tipoSabor.getCusto());
-            st.setInt(3, tipoSabor.getId());
+            st.setDouble(1, tipoSabor.getCusto());
+            st.setInt(2, tipoSabor.getId());
             st.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Erro ao editar tipo de sabor: "
