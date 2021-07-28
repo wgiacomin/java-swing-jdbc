@@ -7,6 +7,7 @@ import app.delivery.model.beans.formatos.Triangulo;
 import app.delivery.model.dao.utils.DAOInterface;
 import app.delivery.model.beans.formatos.TipoForma;
 import app.exceptions.DAOException;
+import app.exceptions.TamanhoException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,7 +15,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import app.delivery.model.dao.utils.ConnectionFactory;
 
 public class FormaDAO implements DAOInterface<FormatoAbstract> {
 
@@ -34,27 +34,31 @@ public class FormaDAO implements DAOInterface<FormatoAbstract> {
     }
 
     private FormatoAbstract extrairForma(ResultSet rs) throws SQLException, DAOException {
-        FormatoAbstract forma;
-        int tipoForma = rs.getInt("tipo_forma");
-
-        switch (tipoForma) {
-            case TipoForma.CIRCULO:
-                forma = new Circulo();
-                ((Circulo) forma).setDimension(rs.getDouble("medida"));
-                break;
-            case TipoForma.QUADRADO:
-                forma = new Quadrado();
-                ((Quadrado) forma).setDimension(rs.getDouble("medida"));
-                break;
-            case TipoForma.TRIANGULO:
-                forma = new Triangulo();
-                ((Triangulo) forma).setDimension(rs.getDouble("medida"));
-                break;
-            default:
-                throw new DAOException("Erro buscando categoria de forma");
+        try {
+            FormatoAbstract forma;
+            int tipoForma = rs.getInt("tipo_forma");
+            
+            switch (tipoForma) {
+                case TipoForma.CIRCULO:
+                    forma = new Circulo();
+                    ((Circulo) forma).setDimension(rs.getDouble("medida"));
+                    break;
+                case TipoForma.QUADRADO:
+                    forma = new Quadrado();
+                    ((Quadrado) forma).setDimension(rs.getDouble("medida"));
+                    break;
+                case TipoForma.TRIANGULO:
+                    forma = new Triangulo();
+                    ((Triangulo) forma).setDimension(rs.getDouble("medida"));
+                    break;
+                default:
+                    throw new DAOException("Erro buscando categoria de forma");
+            }
+            forma.setId(rs.getInt("id"));
+            return forma;
+        } catch (TamanhoException ex) {
+             throw new DAOException("Erro buscando categoria de forma");
         }
-        forma.setId(rs.getInt("id"));
-        return forma;
     }
 
     @Override

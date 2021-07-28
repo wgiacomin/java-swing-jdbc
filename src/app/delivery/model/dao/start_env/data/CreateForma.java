@@ -14,15 +14,15 @@ public class CreateForma {
             con = factory.getConnection();
             query = con.createStatement();
 
-            query.executeUpdate("INSERT INTO forma (medida, tipo_forma) VALUES (300, 2);");
+            query.executeUpdate("INSERT INTO forma (medida, tipo_forma) VALUES (21, 2);");
 
-            query.executeUpdate("INSERT INTO forma (medida, tipo_forma) VALUES (350, 3);");
+            query.executeUpdate("INSERT INTO forma (medida, tipo_forma) VALUES (21, 3);");
 
-            query.executeUpdate("INSERT INTO forma (medida, tipo_forma) VALUES (400, 1);");
+            query.executeUpdate("INSERT INTO forma (medida, tipo_forma) VALUES (21, 1);");
 
-            query.executeUpdate("INSERT INTO forma (medida, tipo_forma) VALUES (200, 3);");
+            query.executeUpdate("INSERT INTO forma (medida, tipo_forma) VALUES (21, 3);");
             
-            query.executeUpdate("INSERT INTO forma (medida, tipo_forma) VALUES (250, 2);");
+            query.executeUpdate("INSERT INTO forma (medida, tipo_forma) VALUES (21, 2);");
 
             System.out.println("Formas criadas com sucesso.");
         } catch (Exception e) {
