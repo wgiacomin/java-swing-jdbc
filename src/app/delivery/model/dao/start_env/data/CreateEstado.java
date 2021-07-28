@@ -14,9 +14,9 @@ public class CreateEstado {
             con = factory.getConnection();
             query = con.createStatement();
 
-            query.executeUpdate("INSERT INTO estado (nome) VALUES ('Aberto');");
-            query.executeUpdate("INSERT INTO estado (nome) VALUES ('A caminho');");
-            query.executeUpdate("INSERT INTO estado (nome) VALUES ('Fechado');");
+            query.executeUpdate("INSERT INTO estado (nome) VALUES ('ABERTO');");
+            query.executeUpdate("INSERT INTO estado (nome) VALUES ('A CAMINHO');");
+            query.executeUpdate("INSERT INTO estado (nome) VALUES ('FECHADO');");
 
             System.out.println("Formas criadas com sucesso.");
         } catch (Exception e) {

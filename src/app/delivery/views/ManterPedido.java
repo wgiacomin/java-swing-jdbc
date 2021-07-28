@@ -456,6 +456,9 @@ public class ManterPedido extends javax.swing.JInternalFrame {
             return;
         }
         Pizza pizza = this.getPizza();
+        if (pizza == null) {
+            return;
+        }
         Pedido pedido;
         if (boxPedidos.getSelectedIndex() == 0) {
             pedido = new Pedido();
@@ -485,6 +488,9 @@ public class ManterPedido extends javax.swing.JInternalFrame {
         }
         if (TabelaPizzas.getSelectedRow() >= 0) {
             Pizza pizza = getPizza();
+            if (pizza == null) {
+                return;
+            }
             pizza.getFormato().setId(pizzaTabela.getPizza(TabelaPizzas.getSelectedRow()).getFormato().getId());
             PizzaController.editar(pizza);
 
@@ -506,7 +512,7 @@ public class ManterPedido extends javax.swing.JInternalFrame {
             Object[] opcoes = {"Sim", "Não"};
             Object defaultChoice = opcoes[1];
             int input = JOptionPane.showOptionDialog(null,
-                    "Tem certeza que deseja remover o cliente selecionado?",
+                    "Tem certeza que deseja remover o pedido selecionado?",
                     "Atenção!",
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.QUESTION_MESSAGE,

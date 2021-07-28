@@ -2,6 +2,7 @@ package app.delivery.model.dao;
 
 import app.delivery.model.beans.Cliente;
 import app.delivery.model.beans.Pedido;
+import app.delivery.model.beans.estado.Estado;
 import app.delivery.model.dao.utils.DAOInterface;
 import app.exceptions.DAOException;
 
@@ -15,7 +16,10 @@ import java.util.List;
 public class PedidoDAO implements DAOInterface<Pedido> {
 
     private static final String QUERY_BUSCAR = "SELECT id, id_cliente FROM pedido WHERE id = ?;";
-    private static final String QUERY_BUSCAR_TODOS = "SELECT id, id_cliente FROM pedido;";
+    private static final String QUERY_BUSCAR_TODOS = "SELECT pedido.id, id_cliente, c.nome, id_estado, e.nome as estado\n"
+            + " FROM pedido"
+            + " JOIN cliente c on c.id = pedido.id_cliente"
+            + " JOIN estado e on e.id = pedido.id_estado";
     private static final String QUERY_BUSCAR_POR_CLIENTE = "SELECT id, id_cliente FROM pedido WHERE id_cliente = ?;";
     private static final String QUERY_INSERIR = "INSERT INTO pedido(id_cliente, valor_total, id_estado) VALUES (?, ?, 1);";
     private static final String QUERY_REMOVER = "DELETE FROM pedido WHERE id = ?;";
@@ -41,6 +45,20 @@ public class PedidoDAO implements DAOInterface<Pedido> {
         return pedido;
     }
 
+    private Pedido extrairPedidoCompleto(ResultSet rs) throws SQLException {
+        Pedido pedido = new Pedido();
+
+        pedido.setId(rs.getInt("id"));
+        Cliente cliente = new Cliente();
+        cliente.setNome(rs.getString("nome"));
+        cliente.setId(rs.getInt("id_cliente"));
+        Estado estado = new Estado();
+        estado.setEstado(rs.getString("estado"));
+        pedido.setCliente(cliente);
+        pedido.setEstado(estado);
+        return pedido;
+    }
+
     @Override
     public Pedido buscar(Pedido pedido) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(QUERY_BUSCAR)) {
@@ -63,7 +81,7 @@ public class PedidoDAO implements DAOInterface<Pedido> {
         try (PreparedStatement st = con.prepareStatement(QUERY_BUSCAR_TODOS)) {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                lista.add(extrairPedido(rs));
+                lista.add(extrairPedidoCompleto(rs));
             }
             return lista;
         } catch (SQLException e) {
@@ -86,7 +104,6 @@ public class PedidoDAO implements DAOInterface<Pedido> {
         }
     }
 
- 
     @Override
     public int inserir(Pedido pedido) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(QUERY_INSERIR)) {

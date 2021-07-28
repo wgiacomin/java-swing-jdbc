@@ -10,7 +10,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import app.delivery.model.dao.utils.ConnectionFactory;
 
 public class EstadoDAO implements DAOInterface<Estado> {
 
@@ -18,9 +17,11 @@ public class EstadoDAO implements DAOInterface<Estado> {
 
     private Connection con = null;
 
-    public EstadoDAO() throws DAOException {
-        ConnectionFactory factory = new ConnectionFactory();
-        con = factory.getConnection();
+    public EstadoDAO(Connection con) throws DAOException {
+        if (con == null) {
+            throw new DAOException("Conexão nula ao criar.");
+        }
+        this.con = con;
     }
 
     @Override

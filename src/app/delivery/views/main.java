@@ -29,6 +29,7 @@ public class main extends javax.swing.JFrame {
         menuCadastrar = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         manterPedido = new javax.swing.JMenuItem();
+        visualizar = new javax.swing.JMenuItem();
         menu1 = new javax.swing.JMenu();
         precosCm = new javax.swing.JMenuItem();
         adicionarSabor = new javax.swing.JMenuItem();
@@ -81,6 +82,14 @@ public class main extends javax.swing.JFrame {
             }
         });
         jMenu1.add(manterPedido);
+
+        visualizar.setText("Visualizar");
+        visualizar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                visualizarMousePressed(evt);
+            }
+        });
+        jMenu1.add(visualizar);
 
         jMenuBar1.add(jMenu1);
 
@@ -160,6 +169,16 @@ public class main extends javax.swing.JFrame {
         adicionarSabor.setVisible(true);
     }//GEN-LAST:event_adicionarSaborMousePressed
 
+    private void visualizarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_visualizarMousePressed
+        VisualizarPedido visualizarPedido = new VisualizarPedido();
+        this.mainScreen.add(visualizarPedido);
+        Dimension desktopSize = this.getSize();
+        Dimension jInternalFrameSize = visualizarPedido.getSize();
+        visualizarPedido.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                (desktopSize.height - jInternalFrameSize.height - 100) / 2);
+        visualizarPedido.setVisible(true);
+    }//GEN-LAST:event_visualizarMousePressed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -203,5 +222,6 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JMenu menu1;
     private javax.swing.JMenuItem menuCadastrar;
     private javax.swing.JMenuItem precosCm;
+    private javax.swing.JMenuItem visualizar;
     // End of variables declaration//GEN-END:variables
 }

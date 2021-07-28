@@ -56,7 +56,8 @@ public class ClienteTabela extends AbstractTableModel {
     public void addCliente(Cliente cliente) {
         ClienteController.adicionar(cliente);
         listaCliente.add(cliente);
-        this.fireTableRowsInserted(this.listaCliente.size() -1, this.listaCliente.size() -1);
+        this.listaCliente = ClienteController.buscarTodos();
+        this.fireTableDataChanged();
     }
     
     public void editCliente(Cliente cliente, int linha){

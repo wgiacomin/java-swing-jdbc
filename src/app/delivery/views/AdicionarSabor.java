@@ -48,8 +48,10 @@ public class AdicionarSabor extends javax.swing.JInternalFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Adicionar"));
 
+        jLabel4.setLabelFor(saborBox);
         jLabel4.setText("Sabor:");
 
+        jLabel3.setLabelFor(categoriaCombox2);
         jLabel3.setText("Categoria:");
 
         botaoAdicionar.setText("Adicionar");
@@ -102,6 +104,7 @@ public class AdicionarSabor extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel1.setLabelFor(saborComboBox);
         jLabel1.setText("Sabor:");
 
         botaoAtualizar.setText("Atualizar");
@@ -111,6 +114,7 @@ public class AdicionarSabor extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel5.setLabelFor(categoriaComboBox);
         jLabel5.setText("Categoria:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);

@@ -36,6 +36,7 @@ public class AtualizarPreco extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel1.setLabelFor(boxCategoria);
         jLabel1.setText("Categoria:");
 
         boxPreco.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
